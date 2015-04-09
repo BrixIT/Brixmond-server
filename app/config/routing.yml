@@ -1,0 +1,7 @@
+brix_i_tbrixmond:
+    resource: "@BrixITbrixmondBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
