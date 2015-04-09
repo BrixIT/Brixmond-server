@@ -1,3 +1,7 @@
-brix_i_tbrixmond_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: BrixITbrixmondBundle:Default:index }
+client_init:
+    path:     /client/config/{fqdn}/{secret}
+    defaults: { _controller: BrixITbrixmondBundle:Client:config }
+
+client_packet:
+    path:     /client/packet/{fqdn}/{secret}
+    defaults: { _controller: BrixITbrixmondBundle:Client:packet }
