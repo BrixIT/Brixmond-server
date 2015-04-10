@@ -5,3 +5,31 @@ client_init:
 client_packet:
     path:     /client/packet/{fqdn}/{secret}
     defaults: { _controller: BrixITbrixmondBundle:Client:packet }
+
+home:
+    path:     /
+    defaults: { _controller: BrixITbrixmondBundle:Default:index }
+
+server_graphs:
+    path:     /graphs/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:graphs, timedomain: hour }
+
+ajax_system_load:
+    path:     /ajax/system-load/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:systemLoad }
+
+ajax_network_bytes:
+    path:     /ajax/network-bytes/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:networkBytes, type: bytes }
+
+ajax_network_packets:
+    path:     /ajax/network-packets/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:networkBytes, type: packets }
+
+ajax_network_errors:
+    path:     /ajax/network-errors/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:networkError }
+
+ajax_sockets:
+    path:     /ajax/sockets/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:sockets }

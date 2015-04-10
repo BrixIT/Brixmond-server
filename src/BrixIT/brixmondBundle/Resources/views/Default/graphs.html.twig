@@ -1,0 +1,623 @@
+{% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
+
+{% block headerbar %}&raquo; Graphs &raquo; {{ fqdn }}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Server info</div>
+                <table class="table table-striped">
+                    <tr>
+                        <th>FQDN</th>
+                        <td>{{ fqdn }}</td>
+                    </tr>
+                    <tr>
+                        <th>CPU</th>
+                        <td>{{ client.cpu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Arch</th>
+                        <td>{{ client.arch }}</td>
+                    </tr>
+                    <tr>
+                        <th>Distro</th>
+                        <td>{{ client.dist }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    System load
+                </div>
+                <div class="panel-graph" id="graph-system-load">
+                    <script>
+                        (function () {
+                            var containerSize = d3.select("#graph-system-load").node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
+
+                            var margin = {top: 15, right: 25, bottom: 25, left: 40};
+
+                            var svg = d3.select("#graph-system-load").append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+
+                            d3.json('/ajax/system-load/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    dataset.push({
+                                        load1: item.load1,
+                                        load5: item.load5,
+                                        load15: item.load15,
+                                        date: new Date(item.time.date)
+                                    });
+                                });
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0].date, dataset[dataset.length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+
+                                var loadmax = d3.max(dataset, function (d) {
+                                    return Math.max(d.load1, d.load5, d.load15);
+                                });
+                                var y = d3.scale.linear()
+                                        .domain([0, Math.max(1, loadmax)])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .orient('left');
+
+                                var line1 = d3.svg.line()
+                                        .interpolate("basis")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.load1);
+                                        });
+
+                                var line5 = d3.svg.line()
+                                        .interpolate("basis")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.load5);
+                                        });
+
+                                var line15 = d3.svg.line()
+                                        .interpolate("basis")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.load15);
+                                        });
+
+                                var color = d3.scale.category20();
+
+                                graph.append('path')
+                                        .attr('d', line1(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(0));
+
+                                graph.append('path')
+                                        .attr('d', line5(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(1));
+
+                                graph.append('path')
+                                        .attr('d', line15(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(2));
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Network packets
+                </div>
+                <div class="panel-graph" id="graph-net-packets">
+                    <script>
+                        (function () {
+                            var container = '#graph-net-packets';
+                            var containerSize = d3.select(container).node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
+
+                            var margin = {top: 15, right: 25, bottom: 25, left: 50};
+
+                            var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+
+                            d3.json('/ajax/network-packets/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    dataset.push({
+                                        up: item.up,
+                                        down: item.down,
+                                        date: new Date(item.time.date)
+                                    });
+                                });
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0].date, dataset[dataset.length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+
+                                var dataMax = d3.max(dataset, function (d) {
+                                    return Math.max(d.up, d.down);
+                                });
+                                var y = d3.scale.linear()
+                                        .domain([0, dataMax])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .ticks(6)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .tickFormat(d3.format("s"))
+                                        .orient('left');
+
+                                var line_upload = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.up);
+                                        });
+
+                                var line_download = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.down);
+                                        });
+
+                                var color = d3.scale.category10();
+
+                                graph.append('path')
+                                        .attr('d', line_download(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(1));
+
+                                graph.append('path')
+                                        .attr('d', line_upload(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(2));
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Network bytes
+                </div>
+                <div class="panel-graph" id="graph-net-bytes">
+                    <script>
+                        (function () {
+                            var container = '#graph-net-bytes';
+                            var containerSize = d3.select(container).node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
+
+                            var margin = {top: 15, right: 25, bottom: 25, left: 50};
+
+                            var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+
+                            d3.json('/ajax/network-bytes/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    dataset.push({
+                                        up: item.up,
+                                        down: item.down,
+                                        date: new Date(item.time.date)
+                                    });
+                                });
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0].date, dataset[dataset.length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+
+                                var dataMax = d3.max(dataset, function (d) {
+                                    return Math.max(d.up, d.down);
+                                });
+                                var y = d3.scale.linear()
+                                        .domain([0, dataMax])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .ticks(6)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .tickFormat(d3.format("s"))
+                                        .orient('left');
+
+                                var line_upload = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.up);
+                                        });
+
+                                var line_download = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.down);
+                                        });
+
+                                var color = d3.scale.category10();
+
+                                graph.append('path')
+                                        .attr('d', line_download(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(1));
+
+                                graph.append('path')
+                                        .attr('d', line_upload(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(2));
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Network errors
+                </div>
+                <div class="panel-graph" id="graph-net-errors">
+                    <script>
+                        (function () {
+                            var container = '#graph-net-errors';
+                            var containerSize = d3.select(container).node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
+
+                            var margin = {top: 15, right: 25, bottom: 25, left: 50};
+
+                            var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+
+                            d3.json('/ajax/network-errors/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    dataset.push({
+                                        dropin: item.dropin,
+                                        dropout: item.dropout,
+                                        errin: item.errin,
+                                        errout: item.errout,
+                                        date: new Date(item.time.date)
+                                    });
+                                });
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0].date, dataset[dataset.length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+
+                                var dataMax = d3.max(dataset, function (d) {
+                                    return Math.max(d.dropin, d.dropout, d.errin, d.errout);
+                                });
+                                var y = d3.scale.linear()
+                                        .domain([0, Math.max(10,dataMax)])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .ticks(6)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .tickFormat(d3.format("s"))
+                                        .orient('left');
+
+                                var line_dropin = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.dropin);
+                                        });
+
+                                var line_dropout = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.dropout);
+                                        });
+
+                                var line_errin = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.errin);
+                                        });
+
+                                var line_errout = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.errout);
+                                        });
+
+                                var color = d3.scale.category10();
+
+                                graph.append('path')
+                                        .attr('d', line_dropin(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(1));
+
+                                graph.append('path')
+                                        .attr('d', line_dropout(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(2));
+
+                                graph.append('path')
+                                        .attr('d', line_errin(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(3));
+
+                                graph.append('path')
+                                        .attr('d', line_errout(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(4));
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Network socket stats
+                </div>
+                <div class="panel-graph" id="graph-sockets">
+                    <script>
+                        (function () {
+                            var container = '#graph-sockets';
+                            var containerSize = d3.select(container).node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
+
+                            var margin = {top: 15, right: 25, bottom: 25, left: 50};
+
+                            var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+
+                            d3.json('/ajax/sockets/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    dataset.push({
+                                        listening: item.listening,
+                                        connecting: item.connecting,
+                                        connected: item.connected,
+                                        closing: item.closing,
+                                        unknown: item.unknown,
+                                        date: new Date(item.time.date)
+                                    });
+                                });
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0].date, dataset[dataset.length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+
+                                var dataMax = d3.max(dataset, function (d) {
+                                    return Math.max(d.listening, d.connecting, d.connected, d.closing, d.unknown);
+                                });
+                                var y = d3.scale.linear()
+                                        .domain([0, Math.max(10,dataMax)])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .ticks(6)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .tickFormat(d3.format("s"))
+                                        .orient('left');
+
+                                var line_listening = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.listening);
+                                        });
+
+                                var line_connecting = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.connecting);
+                                        });
+
+                                var line_connected = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.connected);
+                                        });
+
+                                var line_closing = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.closing);
+                                        });
+
+                                var line_unknown = d3.svg.line()
+                                        .interpolate("monotone")
+                                        .x(function (d) {
+                                            return x(d.date);
+                                        })
+                                        .y(function (d) {
+                                            return y(d.unknown);
+                                        });
+
+                                var color = d3.scale.category20();
+
+                                graph.append('path')
+                                        .attr('d', line_listening(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(1));
+
+                                graph.append('path')
+                                        .attr('d', line_connecting(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(2));
+
+                                graph.append('path')
+                                        .attr('d', line_connected(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(3));
+
+                                graph.append('path')
+                                        .attr('d', line_closing(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(4));
+
+                                graph.append('path')
+                                        .attr('d', line_unknown(dataset))
+                                        .attr("class", "line")
+                                        .style("stroke", color(5));
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

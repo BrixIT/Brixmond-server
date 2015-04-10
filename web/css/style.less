@@ -1,0 +1,54 @@
+@import "../components/bootstrap/less/bootstrap";
+
+@body-bg: #eee;
+
+body > header {
+  height: 48px;
+  line-height: 48px;
+  background: #666;
+  color: #BBB;
+  font-weight: bold;
+  padding-left: @padding-base-horizontal;
+  font-size: 1.3em;
+
+  -webkit-box-shadow: inset 0 -3px 8px -4px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 -3px 8px -4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 1px #000000;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+main {
+  padding-top: @padding-large-vertical;
+}
+
+.panel-graph {
+  height: 200px;
+
+  path.line {
+    fill: none;
+    stroke-width: 1.5px;
+  }
+
+  .axis {
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis line {
+    stroke: #fff;
+  }
+
+  .x.axis .minor {
+    stroke-opacity: .5;
+  }
+
+  .x.axis line, .x.axis path {
+    fill: none;
+    stroke: #000;
+  }
+
+  .y.axis line, .y.axis path {
+    fill: none;
+    stroke: #000;
+  }
+}

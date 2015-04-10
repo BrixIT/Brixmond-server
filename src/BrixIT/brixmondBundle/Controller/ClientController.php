@@ -69,7 +69,7 @@ class ClientController extends Controller
             $datapoint = new Datapoint();
             $datapoint->setClient($client);
             $datapoint->setSystem($packet['name']);
-            $datapoint->setPoint($packet['point']);
+            $datapoint->setPoint(json_decode($packet['point'], true));
             $datapoint->setTime(new \DateTime($packet['stamp']));
             $manager->persist($datapoint);
         }
