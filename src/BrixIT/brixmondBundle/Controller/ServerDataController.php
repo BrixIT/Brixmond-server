@@ -75,6 +75,37 @@ class ServerDataController extends Controller
         return new JsonResponse($response);
     }
 
+    public function cpuUsageAction($fqdn, $timedomain)
+    {
+        $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
+            'fqdn' => $fqdn
+        ]);
+        $repository = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Datapoint');
+        $query = $repository->createQueryBuilder('d')
+            ->where('d.client = :client')
+            ->andWhere('d.system = :system')
+            ->andWhere('d.time >= :begin')
+            ->setParameter('client', $client)
+            ->setParameter('system', 'cpu')
+            ->setParameter('begin', new \DateTime('-' . $this->getTimeDomain($timedomain), new \DateTimeZone('UTC')))
+            ->orderBy('d.time', 'ASC')
+            ->getQuery();
+        $datapoints = $query->getResult();
+        $response = [];
+        foreach ($datapoints as $datapoint) {
+            $point = $datapoint->getPoint();
+            $cpuValues = [];
+            foreach($point as $cpu){
+                $cpuValues[] = $cpu['user'] + $cpu['system'];
+            }
+            $response[] = [
+                'time' => $datapoint->getTime(),
+                'cpu' => $cpuValues
+            ];
+        }
+        return new JsonResponse($response);
+    }
+
     public function networkErrorAction($fqdn, $timedomain)
     {
         $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([

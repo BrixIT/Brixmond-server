@@ -10,7 +10,7 @@ class ServerPageController extends Controller
     {
         $domains = [
             'hour' => '1 Hour',
-            '5min' => '5 Minuts',
+            '5min' => '5 Minutes',
             'halfday' => '12 Hours',
             'day' => '24 Hours'
         ];

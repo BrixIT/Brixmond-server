@@ -6563,8 +6563,11 @@ body > header {
 main {
   padding-top: 10px;
 }
+#buttonrow {
+  margin-bottom: 10px;
+}
 .panel-graph {
-  height: 200px;
+  height: 222px;
 }
 .panel-graph path.line {
   fill: none;

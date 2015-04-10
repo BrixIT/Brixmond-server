@@ -4,6 +4,20 @@
 
 {% block main %}
     <div class="row">
+        <div class="col-xs-12" id="buttonrow">
+            <div class="btn-group" role="group">
+                <a href="/graphs/{{ fqdn }}/5min"
+                   class="btn btn-{% if timedomain=='5min' %}primary{% else %}default{% endif %}">5 Min.</a>
+                <a href="/graphs/{{ fqdn }}/hour"
+                   class="btn btn-{% if timedomain=='hour' %}primary{% else %}default{% endif %}">1 Hour</a>
+                <a href="/graphs/{{ fqdn }}/halfday"
+                   class="btn btn-{% if timedomain=='halfday' %}primary{% else %}default{% endif %}">12 Hours</a>
+                <a href="/graphs/{{ fqdn }}/day"
+                   class="btn btn-{% if timedomain=='day  ' %}primary{% else %}default{% endif %}">1 Day</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">Server info</div>
@@ -342,7 +356,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -388,7 +401,7 @@
                                     return Math.max(d.dropin, d.dropout, d.errin, d.errout);
                                 });
                                 var y = d3.scale.linear()
-                                        .domain([0, Math.max(10,dataMax)])
+                                        .domain([0, Math.max(10, dataMax)])
                                         .range([height - margin.top - margin.bottom, 0]);
 
                                 var xAxis = d3.svg.axis()
@@ -519,7 +532,7 @@
                                     return Math.max(d.listening, d.connecting, d.connected, d.closing, d.unknown);
                                 });
                                 var y = d3.scale.linear()
-                                        .domain([0, Math.max(10,dataMax)])
+                                        .domain([0, Math.max(10, dataMax)])
                                         .range([height - margin.top - margin.bottom, 0]);
 
                                 var xAxis = d3.svg.axis()
@@ -618,6 +631,146 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    CPU Usage
+                </div>
+                <div class="panel-graph" id="graph-cpu">
+                    <script>
+                        (function () {
+                            var container = '#graph-cpu';
+                            var containerSize = d3.select(container).node().getBoundingClientRect();
+                            var width = containerSize.width;
+                            var height = containerSize.height;
 
+                            var margin = {top: 15, right: 25, bottom: 25, left: 50};
+
+                            var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+                            var graph = svg.append('g')
+                                    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+                            var dataset = [];
+                            var cpuCount = 0;
+                            var dataMax = 0;
+                            d3.json('/ajax/cpu-usage/{{ fqdn }}/{{ timedomain }}', function (data) {
+                                data.forEach(function (item, index, array) {
+                                    cpuCount = item.cpu.length;
+                                    for (var i = 0; i < cpuCount; i++) {
+                                        if (dataset.length < cpuCount) {
+                                            dataset.push([]);
+                                        }
+                                        dataset[i].push({
+                                            cpu: item.cpu[i],
+                                            date: new Date(item.time.date)
+                                        });
+                                        dataMax = Math.max(dataMax, item.cpu[i]);
+                                    }
+
+                                });
+                                console.log(dataset);
+                                update();
+                            });
+
+                            function update() {
+                                var x = d3.time.scale()
+                                        .domain([dataset[0][0].date, dataset[0][dataset[0].length - 1].date])
+                                        .rangeRound([0, width - margin.left - margin.right]);
+
+                                console.log("datamax", dataMax);
+                                var y = d3.scale.linear()
+                                        .domain([0, 100])
+                                        .range([height - margin.top - margin.bottom, 0]);
+
+                                var xAxis = d3.svg.axis()
+                                        .scale(x)
+                                        .ticks(6)
+                                        .orient('bottom');
+
+                                var yAxis = d3.svg.axis()
+                                        .scale(y)
+                                        .tickFormat(d3.format("s"))
+                                        .orient('left');
+
+
+                                var color = d3.scale.category10();
+
+                                for (var i = 0; i < cpuCount; i++) {
+
+                                    graph.append('path')
+                                            .attr('d', d3.svg.line()
+                                                    .interpolate("monotone")
+                                                    .x(function (d) {
+                                                        var xding = x(d.date);
+                                                        return xding;
+                                                    })
+                                                    .y(function (d) {
+                                                        var yding = y(d.cpu);
+                                                        return yding;
+                                                    })(dataset[i]))
+                                            .attr("class", "line")
+                                            .style("stroke", color(i));
+                                }
+
+                                graph.append('g')
+                                        .attr('class', 'axis x')
+                                        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+                                        .call(xAxis);
+
+                                graph.append('g')
+                                        .attr('class', 'axis y')
+                                        .call(yAxis);
+                            }
+                        })()
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Top 5 processes
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Process</th>
+                        <th>CPU</th>
+                        <th>Mem</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

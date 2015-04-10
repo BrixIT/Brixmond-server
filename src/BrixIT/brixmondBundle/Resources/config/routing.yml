@@ -33,3 +33,7 @@ ajax_network_errors:
 ajax_sockets:
     path:     /ajax/sockets/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:sockets }
+
+ajax_cpu_usage:
+    path:     /ajax/cpu-usage/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:cpuUsage }
