@@ -39,12 +39,18 @@ class ServerDataController extends Controller
             $point = $datapoint->getPoint();
             $response[] = [
                 'time' => $datapoint->getTime(),
-                'load1' => (float)$point[0],
-                'load5' => (float)$point[1],
-                'load15' => (float)$point[2],
+                'series' => [
+                    (float)$point[0],
+                    (float)$point[1],
+                    (float)$point[2]
+                ]
             ];
         }
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['1 Minute load', '5 Minute load', '15 Minute load'],
+            'minimalHeight' => 1
+        ]);
     }
 
     public function networkBytesAction($fqdn, $timedomain, $type)
@@ -68,11 +74,17 @@ class ServerDataController extends Controller
             $point = $datapoint->getPoint();
             $response[] = [
                 'time' => $datapoint->getTime(),
-                'down' => (int)$point['counters'][$type . '_recv'],
-                'up' => (int)$point['counters'][$type . '_sent'],
+                'series' => [
+                    (int)$point['counters'][$type . '_recv'],
+                    (int)$point['counters'][$type . '_sent']
+                ]
             ];
         }
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['Download', 'Upload'],
+            'minimalHeight' => 10
+        ]);
     }
 
     public function cpuUsageAction($fqdn, $timedomain)
@@ -92,18 +104,28 @@ class ServerDataController extends Controller
             ->getQuery();
         $datapoints = $query->getResult();
         $response = [];
+        $cpuCount = 0;
         foreach ($datapoints as $datapoint) {
             $point = $datapoint->getPoint();
             $cpuValues = [];
             foreach($point as $cpu){
                 $cpuValues[] = $cpu['user'] + $cpu['system'];
             }
+            $cpuCount = count($cpuValues);
             $response[] = [
                 'time' => $datapoint->getTime(),
-                'cpu' => $cpuValues
+                'series' => $cpuValues
             ];
         }
-        return new JsonResponse($response);
+        $labels = [];
+        for($i=0;$i<$cpuCount;$i++){
+            $labels[] = 'Core ' . ($i+1);
+        }
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => $labels,
+            'minimalHeight' => 10
+        ]);
     }
 
     public function networkErrorAction($fqdn, $timedomain)
@@ -127,13 +149,19 @@ class ServerDataController extends Controller
             $point = $datapoint->getPoint();
             $response[] = [
                 'time' => $datapoint->getTime(),
-                'dropin' => (int)$point['counters']['dropin'],
-                'dropout' => (int)$point['counters']['dropout'],
-                'errin' => (int)$point['counters']['errin'],
-                'errout' => (int)$point['counters']['errout'],
+                'series' => [
+                    (int)$point['counters']['dropin'],
+                    (int)$point['counters']['dropout'],
+                    (int)$point['counters']['errin'],
+                    (int)$point['counters']['errout']
+                ]
             ];
         }
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['Drop in', 'Drop out', 'Error in', 'Error out'],
+            'minimalHeight' => 10
+        ]);
     }
 
     public function socketsAction($fqdn, $timedomain)
@@ -157,13 +185,19 @@ class ServerDataController extends Controller
             $point = $datapoint->getPoint();
             $response[] = [
                 'time' => $datapoint->getTime(),
-                'connecting' => (int)$point['sockets']['connecting'],
-                'unknown' => (int)$point['sockets']['unknown'],
-                'connected' => (int)$point['sockets']['connected'],
-                'closing' => (int)$point['sockets']['closing'],
-                'listening' => (int)$point['sockets']['listening'],
+                'series' => [
+                    (int)$point['sockets']['connecting'],
+                    (int)$point['sockets']['connected'],
+                    (int)$point['sockets']['closing'],
+                    (int)$point['sockets']['listening'],
+                    (int)$point['sockets']['unknown']
+                ]
             ];
         }
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['Connecting', 'Connected', 'Closing', 'Listening', 'Unknown'],
+            'minimalHeight' => 10
+        ]);
     }
 }
