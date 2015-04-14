@@ -9,6 +9,7 @@
 {% block main %}
     <div class="row">
         <div class="col-xs-12" id="buttonrow">
+            <a href="/" class="btn btn-default">&laquo; Back to dashboard</a>
             <div class="btn-group" role="group">
                 <a href="/graphs/{{ fqdn }}/5min"
                    class="btn btn-{% if timedomain=='5min' %}primary{% else %}default{% endif %}">5 Min.</a>
