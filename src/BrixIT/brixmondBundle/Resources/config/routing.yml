@@ -10,6 +10,10 @@ home:
     path:     /
     defaults: { _controller: BrixITbrixmondBundle:Default:index }
 
+home_graph:
+    path:     /graph
+    defaults: { _controller: BrixITbrixmondBundle:Default:graph }
+
 server_graphs:
     path:     /graphs/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerPage:graphs, timedomain: hour }

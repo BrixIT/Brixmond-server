@@ -14,6 +14,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.4",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "graphlib-dot": "~0.6.1",
+    "dagre-d3": "~0.4.3"
   }
 }

@@ -76,6 +76,11 @@ class Client
      */
     protected $datapoints;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Host", mappedBy="client")
+     **/
+    private $host;
+
     public function __construct()
     {
         $this->datapoints = new ArrayCollection();
@@ -250,5 +255,61 @@ class Client
     public function getSendThrottle()
     {
         return $this->sendThrottle;
+    }
+
+    /**
+     * Add datapoints
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Datapoint $datapoints
+     * @return Client
+     */
+    public function addDatapoint(\BrixIT\brixmondBundle\Entity\Datapoint $datapoints)
+    {
+        $this->datapoints[] = $datapoints;
+
+        return $this;
+    }
+
+    /**
+     * Remove datapoints
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Datapoint $datapoints
+     */
+    public function removeDatapoint(\BrixIT\brixmondBundle\Entity\Datapoint $datapoints)
+    {
+        $this->datapoints->removeElement($datapoints);
+    }
+
+    /**
+     * Get datapoints
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDatapoints()
+    {
+        return $this->datapoints;
+    }
+
+    /**
+     * Set host
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Host $host
+     * @return Client
+     */
+    public function setHost(\BrixIT\brixmondBundle\Entity\Host $host = null)
+    {
+        $this->host = $host;
+
+        return $this;
+    }
+
+    /**
+     * Get host
+     *
+     * @return \BrixIT\brixmondBundle\Entity\Host 
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 }
