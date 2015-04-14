@@ -25,7 +25,7 @@ class DefaultController extends Controller
         foreach ($hosts as $host) {
             $parameters = [];
             $parameters['label'] = $host->getName();
-            switch($host->getType()){
+            switch ($host->getType()) {
                 case "vps":
                     $parameters['style'] = 'fill: #ccc;';
                     break;
@@ -40,6 +40,10 @@ class DefaultController extends Controller
                     $parameters['shape'] = 'ellipse';
                     break;
 
+            }
+            if ($host->getClient() != null) {
+                $parameters['labelType'] = 'html';
+                $parameters['label'] = "<a href='/graphs/" . $host->getClient()->getFQDN() . "'>" . $host->getName() . "</a>";
             }
             $parameterPart = [];
             foreach ($parameters as $key => $value) {

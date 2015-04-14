@@ -2,6 +2,52 @@
 
 {% block headerbar %}&raquo; Overview{% endblock %}
 
+{% block scripts %}
+    <script src="{{ asset('components/lodash/dist/lodash.min.js') }}"></script>
+    <script src="{{ asset('components/graphlib/dist/graphlib.core.min.js') }}"></script>
+    <script src="{{ asset('components/graphlib-dot/dist/graphlib-dot.core.js') }}"></script>
+    <script src="{{ asset('components/dagre/dist/dagre.core.min.js') }}"></script>
+    <script src="{{ asset('components/dagre-d3/dist/dagre-d3.core.js') }}"></script>
+{% endblock %}
+
 {% block main %}
-    test
+        <svg width="800" height="800" id="dashboard-graph">
+            <g/>
+        </svg>
+    <script>
+        var svg = d3.select("svg"),
+                inner = d3.select("svg g"),
+                zoom = d3.behavior.zoom().on("zoom", function () {
+                    inner.attr("transform", "translate(" + d3.event.translate + ")" +
+                    "scale(" + d3.event.scale + ")");
+                });
+        svg.call(zoom);
+
+
+
+        d3.text('/graph', function (data) {
+
+            var svgWidth = window.innerWidth - 32;
+            var svgHeight = window.innerHeight - 150;
+            svg.attr("width", svgWidth);
+            svg.attr("height", svgHeight);
+
+            // Create and configure the renderer
+            var render = dagreD3.render();
+
+            var g = graphlibDot.read(data);
+            if (!g.graph().hasOwnProperty("marginx") && !g.graph().hasOwnProperty("marginy")) {
+                g.graph().marginx = 20;
+                g.graph().marginy = 20;
+            }
+            g.graph().transition = function (selection) {
+                return selection.transition().duration(500);
+            };
+
+            // Render the graph into svg g
+            d3.select("svg g").call(render, g);
+        });
+
+
+    </script>
 {% endblock %}

@@ -2,6 +2,10 @@
 
 {% block headerbar %}&raquo; Graphs &raquo; {{ fqdn }} ({{ timedomainLabel }}){% endblock %}
 
+{% block scripts %}
+    <script src="{{ asset('js/graph.js') }}"></script>
+{% endblock %}
+
 {% block main %}
     <div class="row">
         <div class="col-xs-12" id="buttonrow">
