@@ -62,6 +62,89 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    CPU Usage
+                </div>
+                <div class="panel-graph" id="graph-cpu">
+                    <script>
+                        generateLineChart('#graph-cpu', 'cpu-usage', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10, false);
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Top 5 processes
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Process</th>
+                        <th>CPU</th>
+                        <th>Mem</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    <tr>
+                        <td>blender</td>
+                        <td>33.4%</td>
+                        <td>142 MB</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Physical memory
+                </div>
+                <div class="panel-graph" id="graph-memory">
+                    <script>
+                        generateAreaChart('#graph-memory', 'memory', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20c);
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Swap
+                </div>
+                <div class="panel-graph" id="graph-swap">
+                    <script>
+                        generateAreaChart('#graph-swap', 'swap', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20);
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -110,87 +193,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    CPU Usage
-                </div>
-                <div class="panel-graph" id="graph-cpu">
-                    <script>
-                        generateLineChart('#graph-cpu', 'cpu-usage', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10, false);
-                    </script>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Top 5 processes
-                </div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Process</th>
-                        <th>CPU</th>
-                        <th>Mem</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Physical memory
-                </div>
-                <div class="panel-graph" id="graph-memory">
-                    <script>
-                        generateAreaChart('#graph-memory', 'memory', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20c);
-                    </script>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Swap
-                </div>
-                <div class="panel-graph" id="graph-swap">
-                    <script>
-                        generateAreaChart('#graph-swap', 'swap', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20);
-                    </script>
-                </div>
-            </div>
-        </div>
-
     </div>
 {% endblock %}
