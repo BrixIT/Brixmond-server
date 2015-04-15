@@ -3,7 +3,7 @@
 {% block headerbar %}&raquo; Graphs &raquo; </span>{{ fqdn }}<span class="hidden-xs"> ({{ timedomainLabel }})</span>{% endblock %}
 
 {% block scripts %}
-    <script src="{{ asset('js/graph.js') }}"></script>
+    <script src="{{ asset('js/chart.js') }}"></script>
 {% endblock %}
 
 {% block main %}
@@ -54,7 +54,7 @@
                 </div>
                 <div class="panel-graph" id="graph-system-load">
                     <script>
-                        generateLineGraph('#graph-system-load', 'system-load', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20, false);
+                        generateLineChart('#graph-system-load', 'system-load', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20, false);
                     </script>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="panel-graph" id="graph-net-packets">
                     <script>
-                        generateLineGraph('#graph-net-packets', 'network-packets', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
+                        generateLineChart('#graph-net-packets', 'network-packets', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
                     </script>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="panel-graph" id="graph-net-bytes">
                     <script>
-                        generateLineGraph('#graph-net-bytes', 'network-bytes', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
+                        generateLineChart('#graph-net-bytes', 'network-bytes', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
                     </script>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="panel-graph" id="graph-net-errors">
                     <script>
-                        generateLineGraph('#graph-net-errors', 'network-errors', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
+                        generateLineChart('#graph-net-errors', 'network-errors', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
                     </script>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="panel-graph" id="graph-sockets">
                     <script>
-                        generateLineGraph('#graph-sockets', 'sockets', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20);
+                        generateLineChart('#graph-sockets', 'sockets', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20);
                     </script>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="panel-graph" id="graph-cpu">
                     <script>
-                        generateLineGraph('#graph-cpu', 'cpu-usage', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10, false);
+                        generateLineChart('#graph-cpu', 'cpu-usage', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10, false);
                     </script>
                 </div>
             </div>

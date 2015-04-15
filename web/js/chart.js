@@ -1,4 +1,4 @@
-function generateLineGraph(container, ajaxKey, fqdn, timedomain, colorClass, useSIPrefixes) {
+function generateLineChart(container, ajaxKey, fqdn, timedomain, colorClass, useSIPrefixes) {
 
     if (typeof(useSIPrefixes) === 'undefined') useSIPrefixes = true;
 
