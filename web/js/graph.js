@@ -1,14 +1,17 @@
 function generateLineGraph(container, ajaxKey, fqdn, timedomain, colorClass, useSIPrefixes) {
 
-    if (typeof(useSIPrefixes)==='undefined') useSIPrefixes = true;
+    if (typeof(useSIPrefixes) === 'undefined') useSIPrefixes = true;
 
     var containerSize = d3.select(container).node().getBoundingClientRect();
     var width = containerSize.width;
     var height = containerSize.height;
 
-    var margin = {top: 15, right: 25, bottom: 25, left: 50};
+    var margin = {top: 35, right: 25, bottom: 25, left: 50, legend: 10};
 
     var svg = d3.select(container).append('svg').attr('height', height).attr('width', width);
+
+    var legend = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ', ' + margin.legend + ')');
 
     var graph = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
@@ -46,7 +49,7 @@ function generateLineGraph(container, ajaxKey, fqdn, timedomain, colorClass, use
 
     function update() {
         var firstDate = dataset[0][0].date;
-        var lastDate = dataset[0][dataset[0].length-1].date;
+        var lastDate = dataset[0][dataset[0].length - 1].date;
 
         var color = colorClass();
 
@@ -66,12 +69,30 @@ function generateLineGraph(container, ajaxKey, fqdn, timedomain, colorClass, use
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient('left');
-        if(useSIPrefixes){
+        if (useSIPrefixes) {
             yAxis = yAxis.tickFormat(d3.format("s"));
         }
-
-
+        var itemOffset = 0;
         for (var i = 0; i < serieCount; i++) {
+            var legendItem = legend.append('g');
+
+            var textLabel = legendItem.append('text')
+                .text(labels[i])
+                .attr('x', 10 + itemOffset)
+                .attr('y', 12);
+            var textWidth = 0;
+            textLabel.each(function (d) {
+                textWidth = this.getBBox().width;
+            });
+            var colorLabel = legendItem.append('circle')
+                .attr('cx', itemOffset)
+                .attr('cy', 7)
+                .attr('r', 5)
+                .style('fill', color(i));
+            itemOffset += textWidth + 20;
+        }
+
+        for (i = 0; i < serieCount; i++) {
             graph.append('path')
                 .attr('d', d3.svg.line()
                     .interpolate("monotone")
