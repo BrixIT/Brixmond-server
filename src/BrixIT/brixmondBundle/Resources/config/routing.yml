@@ -41,3 +41,7 @@ ajax_sockets:
 ajax_cpu_usage:
     path:     /ajax/cpu-usage/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:cpuUsage }
+
+ajax_memory:
+    path:     /ajax/memory/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:memory }

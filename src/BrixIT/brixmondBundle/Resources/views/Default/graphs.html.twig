@@ -166,5 +166,18 @@
                 </table>
             </div>
         </div>
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Physical memory
+                </div>
+                <div class="panel-graph" id="graph-memory">
+                    <script>
+                        generateAreaChart('#graph-memory', 'memory', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category20c);
+                    </script>
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
