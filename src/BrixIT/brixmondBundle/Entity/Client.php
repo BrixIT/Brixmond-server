@@ -81,9 +81,15 @@ class Client
      **/
     private $host;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ClientInfo", mappedBy="client")
+     */
+    protected $info;
+
     public function __construct()
     {
         $this->datapoints = new ArrayCollection();
+        $this->info = new ArrayCollection();
     }
 
     /**
@@ -311,5 +317,38 @@ class Client
     public function getHost()
     {
         return $this->host;
+    }
+
+    /**
+     * Add info
+     *
+     * @param \BrixIT\brixmondBundle\Entity\ClientInfo $info
+     * @return Client
+     */
+    public function addInfo(\BrixIT\brixmondBundle\Entity\ClientInfo $info)
+    {
+        $this->info[] = $info;
+
+        return $this;
+    }
+
+    /**
+     * Remove info
+     *
+     * @param \BrixIT\brixmondBundle\Entity\ClientInfo $info
+     */
+    public function removeInfo(\BrixIT\brixmondBundle\Entity\ClientInfo $info)
+    {
+        $this->info->removeElement($info);
+    }
+
+    /**
+     * Get info
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInfo()
+    {
+        return $this->info;
     }
 }

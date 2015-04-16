@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Datapoint
  *
- * @ORM\Table()
+ * @ORM\Table(indexes={@ORM\Index(name="uniquepoint", columns={"client_id", "time", "system"})})
  * @ORM\Entity
  */
 class Datapoint
