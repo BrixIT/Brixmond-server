@@ -3,6 +3,7 @@
 namespace BrixIT\brixmondBundle\Controller;
 
 use BrixIT\brixmondBundle\Entity\Client;
+use BrixIT\brixmondBundle\Entity\ClientInfo;
 use BrixIT\brixmondBundle\Entity\Datapoint;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,19 +60,43 @@ class ClientController extends Controller
             'secret' => $secret
         ]);
 
-        if(!$client){
+        if (!$client) {
             return new JsonResponse(["error" => "Client not accepted"], 412);
         }
 
         $manager = $this->getDoctrine()->getManager();
         $packets = json_decode($request->getContent(), true);
+
+        $existingInfoRows = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:ClientInfo')->findBy([
+            'client' => $client
+        ]);
+        $existingInfo = [];
+        foreach ($existingInfoRows as $row) {
+            $existingInfo[$row->getName()] = $row;
+        }
+
         foreach ($packets as $packet) {
-            $datapoint = new Datapoint();
-            $datapoint->setClient($client);
-            $datapoint->setSystem($packet['name']);
-            $datapoint->setPoint(json_decode($packet['point'], true));
-            $datapoint->setTime(new \DateTime($packet['stamp']));
-            $manager->persist($datapoint);
+            if ($packet['type'] == 'point') {
+                $datapoint = new Datapoint();
+                $datapoint->setClient($client);
+                $datapoint->setSystem($packet['name']);
+                $datapoint->setPoint(json_decode($packet['point'], true));
+                $datapoint->setTime(new \DateTime($packet['stamp']));
+                $manager->persist($datapoint);
+            } elseif ($packet['type'] == 'info') {
+                if (array_key_exists($packet['name'], $existingInfo)) {
+                    $existingInfo[$packet['name']]->setValue(json_decode($packet['point'], true));
+                    $manager->persist($existingInfo[$packet['name']]);
+                } else {
+                    $info = new ClientInfo();
+                    $info->setClient($client);
+                    $info->setName($packet['name']);
+                    $info->setValue(json_decode($packet['point'], true));
+                    $manager->persist($info);
+                    $existingInfo[$packet['name']] = $info;
+                }
+            }
+
         }
         $manager->flush();
         return new Response();
