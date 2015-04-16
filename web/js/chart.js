@@ -57,7 +57,7 @@ function generateLineChart(container, ajaxKey, fqdn, timedomain, colorClass, use
             .rangeRound([0, width - margin.left - margin.right]);
 
         var y = d3.scale.linear()
-            .domain([0, Math.max(dataMin, dataMax)])
+            .domain([0, Math.max(dataMin, dataMax * 1.05)])
             .range([height - margin.top - margin.bottom, 0]);
 
         var xAxis = d3.svg.axis()
@@ -67,6 +67,7 @@ function generateLineChart(container, ajaxKey, fqdn, timedomain, colorClass, use
 
         var yAxis = d3.svg.axis()
             .scale(y)
+            .tickSize(-(width - margin.left - margin.right))
             .orient('left');
         if (useSIPrefixes) {
             yAxis = yAxis.tickFormat(d3.format("s"));

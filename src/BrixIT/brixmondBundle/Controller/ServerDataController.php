@@ -124,7 +124,7 @@ class ServerDataController extends Controller
         return new JsonResponse([
             'dataset' => $response,
             'labels' => $labels,
-            'minimalHeight' => 10
+            'minimalHeight' => 100
         ]);
     }
 
