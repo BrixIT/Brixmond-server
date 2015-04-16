@@ -31,6 +31,16 @@ class ServerPageController extends Controller
 
         $context['client'] = $client;
 
+        $infoRows = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:ClientInfo')->findBy([
+            'client' => $client
+        ]);
+        $info = [];
+        foreach ($infoRows as $row) {
+            $info[$row->getName()] = $row;
+        }
+
+        $context['info'] = $info;
+
         return $this->render('BrixITbrixmondBundle:Default:graphs.html.twig', $context);
     }
 }

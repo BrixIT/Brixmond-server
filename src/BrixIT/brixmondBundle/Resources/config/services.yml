@@ -2,3 +2,7 @@ services:
 #    brix_i_tbrixmond.example:
 #        class: BrixIT\brixmondBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }

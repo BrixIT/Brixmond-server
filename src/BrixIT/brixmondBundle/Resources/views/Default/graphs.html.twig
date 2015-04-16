@@ -88,31 +88,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
-                    <tr>
-                        <td>blender</td>
-                        <td>33.4%</td>
-                        <td>142 MB</td>
-                    </tr>
+                    {% for process in info.processes.value %}
+                        <tr>
+                            <td title="{{ process.name }}" class="ellipsis">
+                                <div class="ellipsis">{{ process.name }}</div>
+                            </td>
+                            <td width="100">{{ process.cpu | number_format(2, '.') }}%</td>
+                            <td width="100">{{ process.mem | number_format(2, '.') }}%</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
