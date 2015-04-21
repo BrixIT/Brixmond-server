@@ -43,7 +43,7 @@ class ClientController extends Controller
                 return new JsonResponse([
                     'enabled' => true,
                     'send_throttle' => $client->getSendThrottle(),
-                    'monitor_enabled' => [
+                    'monitor_enabled' => [ // TODO: Retrieve this config from database
                         'apache' => false
                     ]
                 ]);
