@@ -1,34 +1,11 @@
 {% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
+{% import "BrixITbrixmondBundle:Default:macros.html.twig" as macros %}
 
 {% block headerbar %}&raquo; Graphs &raquo; </span>{{ fqdn }}<span class="hidden-xs"> ({{ timedomainLabel }})</span>{% endblock %}
 
 {% block scripts %}
     <script src="{{ asset('js/chart.js') }}"></script>
 {% endblock %}
-
-{% macro bytesToSize(bytes) %}
-    {% spaceless %}
-        {% set kilobyte = 1000 %}
-        {% set megabyte = kilobyte * 1000 %}
-        {% set gigabyte = megabyte * 1000 %}
-        {% set terabyte = gigabyte * 1000 %}
-        {% set petabyte = terabyte * 1000 %}
-
-        {% if bytes < kilobyte %}
-            {{ bytes ~ ' B' }}
-        {% elseif bytes < megabyte %}
-            {{ (bytes / kilobyte)|number_format(2, '.') ~ ' KB' }}
-        {% elseif bytes < gigabyte %}
-            {{ (bytes / megabyte)|number_format(2, '.') ~ ' MB' }}
-        {% elseif bytes < terabyte %}
-            {{ (bytes / gigabyte)|number_format(2, '.') ~ ' GB' }}
-        {% elseif bytes < petabyte %}
-            {{ (bytes / terabyte)|number_format(2, '.') ~ ' TB' }}
-        {% else %}
-            {{ (bytes / petabyte)|number_format(2, '.') ~ ' PB' }}
-        {% endif %}
-    {% endspaceless %}
-{% endmacro %}
 
 {% block main %}
     <div class="row">
@@ -226,8 +203,8 @@
                                 <td>{{ disk.device }}</td>
                                 <td>{{ disk.mountpoint }}</td>
                                 <td>{{ disk.fstype }}</td>
-                                <td>{{ bytesToSize(disk.usage.total) }}</td>
-                                <td>{{ bytesToSize(disk.usage.used) }} ({{ disk.usage.percent }}%)</td>
+                                <td>{{ macros.bytesToSize(disk.usage.total) }}</td>
+                                <td>{{ macros.bytesToSize(disk.usage.used) }} ({{ disk.usage.percent }}%)</td>
                             </tr>
                         {% endfor %}
                     {% endif %}
