@@ -42,7 +42,10 @@ class ClientController extends Controller
             if ($client->getEnabled()) {
                 return new JsonResponse([
                     'enabled' => true,
-                    'send_throttle' => $client->getSendThrottle()
+                    'send_throttle' => $client->getSendThrottle(),
+                    'monitor_enabled' => [
+                        'apache' => false
+                    ]
                 ]);
             } else {
                 return new JsonResponse([
