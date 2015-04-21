@@ -178,4 +178,38 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Disk usage and mounts
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Mountpoint</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Used</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if info.disks is defined %}
+                        {% for disk in info.disks.value %}
+                            <tr>
+                                <td>{{ disk.device }}</td>
+                                <td>{{ disk.mountpoint }}</td>
+                                <td>{{ disk.fstype }}</td>
+                                <td>{{ disk.usage.total }}</td>
+                                <td>{{ disk.usage.used }} ({{ disk.usage.percent }}%)</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
