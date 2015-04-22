@@ -21,7 +21,7 @@
                         <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
                     </label>
                 </div>
-
+                <a href="{{ path("fos_user_resetting_request") }}" class="btn btn-default pull-right">Reset password</a>
                 <input type="submit" id="_submit" name="_submit" class="btn btn-primary"
                        value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}"/>
             </form>
