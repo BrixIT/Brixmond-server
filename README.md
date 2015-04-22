@@ -19,11 +19,16 @@ This project is translated in Enlish and Dutch.
 ## Masterserver installation
 
 ```bash
+# Clone the git repository
 $ git clone https://github.com/BrixIT/Brixmond-server.git
 $ cd Brixmond-server
+# Install the composer dependencies
 $ composer install
 # Answer the questions in the installation wizard
 $ bower install
+# Create and fill the database
 $ php app/console doctrine:database:create
 $ php app/console doctrine:schema:update --force
+# Create the admin user to log in on the webinterface
+$ php app/console fos:user:create --super-admin
 ```
