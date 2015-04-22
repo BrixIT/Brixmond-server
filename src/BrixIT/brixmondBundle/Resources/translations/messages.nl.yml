@@ -3,6 +3,8 @@ auth:
     pwreset: Wachtwoord resetten
     backtologin: Terug naar loginscherm
 
+settings: Instellingen
+
 overview:
     title: Overzicht
     internet: Internet

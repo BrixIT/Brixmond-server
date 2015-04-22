@@ -3,6 +3,8 @@ auth:
     pwreset: Reset password
     backtologin: Back to login
 
+settings: Settings
+
 overview:
     title: Overview
     internet: Internet

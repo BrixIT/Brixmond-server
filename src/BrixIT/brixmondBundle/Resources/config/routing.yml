@@ -49,3 +49,7 @@ ajax_memory:
 ajax_swap:
     path:     /ajax/swap/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:swap }
+
+admin:
+    path:     /admin
+    defaults: { _controller: BrixITbrixmondBundle:Admin:index }
