@@ -10,6 +10,7 @@ auth:
 roles:
     ROLE_USER: User
     ROLE_ADMIN: Admin
+    ROLE_SUPER_ADMIN: Superadmin
 
 overview:
     title: Overview

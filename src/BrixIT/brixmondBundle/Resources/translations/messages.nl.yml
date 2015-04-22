@@ -9,7 +9,8 @@ auth:
 
 roles:
     ROLE_USER: Gebruiker
-    ROLE_ADMIN: Administrator
+    ROLE_ADMIN: Beheerder
+    ROLE_SUPER_ADMIN: Hoofd beheerder
 
 overview:
     title: Overzicht
