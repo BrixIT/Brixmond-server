@@ -5,27 +5,74 @@
 {% block scripts %}{% endblock %}
 
 {% block admin %}
-    <div class="panel-body">
-        <h2>{{ 'admin.servers.new'|trans }}:</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ 'admin.servers.new'|trans }}
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'admin.servers.headings.hostname' | trans }}</th>
+                        <th>{{ 'admin.servers.headings.secret' | trans }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for client in clients.inactive %}
+                        <tr>
+                            <td>
+                                {{ client.fqdn }}
+                            </td>
+                            <td>
+                                {{ client.secret }}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_server_accept', {'id': client.id}) }}"
+                                   class="btn btn-sm btn-default">Accept client</a>
+                                <a href="{{ path('admin_server_reject', {'id': client.id}) }}"
+                                   class="btn btn-sm btn-danger">Remove request</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ 'admin.servers.active'|trans }}
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'admin.servers.headings.hostname' | trans }}</th>
+                        <th>{{ 'admin.servers.headings.distro' | trans }}</th>
+                        <th>{{ 'admin.servers.headings.messages' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for client in clients.active %}
+                        <tr>
+                            <td>
+                                {{ client.fqdn }}
+                            </td>
+                            <td>
+                                {{ client.dist }}
+                            </td>
+                            <td>Not implemented</td>
+                            <td>
+                                <a href="{{ path('server_graphs', {'timedomain': 'hour', 'fqdn': client.fqdn}) }}"
+                                   class="btn btn-sm btn-default">Open</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{{ 'admin.servers.headings.hostname' | trans }}</th>
-            <th>{{ 'admin.servers.headings.secret' | trans }}</th>
-        </tr>
-        </thead>
-    </table>
-    <div class="panel-body">
-        <h2>{{ 'admin.servers.active'|trans }}:</h2>
-    </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{{ 'admin.servers.headings.hostname' | trans }}</th>
-            <th>{{ 'admin.servers.headings.distro' | trans }}</th>
-            <th>{{ 'admin.servers.headings.messages' | trans }}</th>
-        </tr>
-        </thead>
-    </table>
 {% endblock %}
