@@ -19,7 +19,7 @@ admin:
     title:
         base: Instellingen
         servers: Servers
-        user: Gebruikers
+        users: Gebruikers
 
     users:
         headings:
