@@ -1,10 +1,36 @@
+settings: Instellingen
+yes: ja
+no: nee
+
 auth:
     login: Inloggen
     pwreset: Wachtwoord resetten
     backtologin: Terug naar loginscherm
 
-settings: Instellingen
-
 overview:
     title: Overzicht
     internet: Internet
+
+admin:
+    title:
+        base: Instellingen
+        servers: Servers
+        user: Gebruikers
+
+    users:
+        headings:
+            name: Naam
+            email: E-mail
+            enabled: Ingeschakeld
+            roles: Rollen
+            lastlogin: Laatste login
+        add: Gebruiker toevoegen
+
+    servers:
+        headings:
+            hostname: Computernaam
+            secret: Geheime code
+            distro: Distributie
+            messages: Berichten
+        new: Nieuwe servers
+        active: Actieve servers

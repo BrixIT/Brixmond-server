@@ -1,0 +1,27 @@
+{% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="list-group">
+                <a href="{{ path('admin_servers') }}"
+                   class="list-group-item{% if app.request.get('_route') == 'admin_servers' %} active{% endif %}">
+                    {{ 'admin.title.servers'|trans }}
+                </a>
+                <a href="{{ path('admin_users') }}"
+                   class="list-group-item{% if app.request.get('_route') == 'admin_users' %} active{% endif %}">
+                    {{ 'admin.title.users'|trans }}
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="panel panel-default">
+                {% block admin %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

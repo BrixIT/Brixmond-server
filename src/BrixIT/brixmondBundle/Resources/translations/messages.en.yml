@@ -1,10 +1,36 @@
+settings: Settings
+yes: yes
+no: no
+
 auth:
     login: Login
     pwreset: Reset password
     backtologin: Back to login
 
-settings: Settings
-
 overview:
     title: Overview
     internet: Internet
+
+admin:
+    title:
+        base: Settings
+        servers: Servers
+        users: Users
+
+    users:
+        headings:
+            name: Name
+            email: E-mail
+            enabled: Enabled
+            roles: Roles
+            lastlogin: Last login
+        add: Add user
+
+    servers:
+        headings:
+            hostname: Hostname
+            secret: Secret
+            distro: Distro
+            messages: Messages
+        new: New servers
+        active: Active servers

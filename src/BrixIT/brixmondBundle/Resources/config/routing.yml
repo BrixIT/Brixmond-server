@@ -50,6 +50,10 @@ ajax_swap:
     path:     /ajax/swap/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:swap }
 
-admin:
+admin_servers:
     path:     /admin
-    defaults: { _controller: BrixITbrixmondBundle:Admin:index }
+    defaults: { _controller: BrixITbrixmondBundle:Admin:servers }
+
+admin_users:
+    path:     /admin/users
+    defaults: { _controller: BrixITbrixmondBundle:Admin:users }
