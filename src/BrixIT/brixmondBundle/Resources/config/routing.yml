@@ -54,6 +54,14 @@ admin_servers:
     path:     /admin
     defaults: { _controller: BrixITbrixmondBundle:Admin:servers }
 
+admin_server_accept:
+    path:     /admin/server/{id}/accept
+    defaults: { _controller: BrixITbrixmondBundle:Admin:serverAccept }
+
+admin_server_reject:
+    path:     /admin/server/{id}/reject
+    defaults: { _controller: BrixITbrixmondBundle:Admin:serverReject }
+
 admin_users:
     path:     /admin/users
     defaults: { _controller: BrixITbrixmondBundle:Admin:users }

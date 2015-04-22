@@ -5,39 +5,41 @@
 {% block scripts %}{% endblock %}
 
 {% block admin %}
-    <div class="panel-body">
-        <a href="#" class="btn btn-default">{{ 'admin.users.add' | trans }}</a>
-    </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{{ 'admin.users.headings.name' | trans }}</th>
-            <th>{{ 'admin.users.headings.email' | trans }}</th>
-            <th>{{ 'admin.users.headings.enabled' | trans }}</th>
-            <th>{{ 'admin.users.headings.roles' | trans }}</th>
-            <th>{{ 'admin.users.headings.lastlogin' | trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="#" class="btn btn-default">{{ 'admin.users.add' | trans }}</a>
+        </div>
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>
-                    {% if user.enabled %}
-                        {{ 'yes'|trans }}
-                    {% else %}
-                        {{ 'no'|trans }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% for role in user.roles %}
-                        [{{ "roles.#{role}" | trans }}]
-                    {% endfor %}
-                </td>
-                <td>{{ user.lastLogin | date("Y-m-d H:i") }}</td>
+                <th>{{ 'admin.users.headings.name' | trans }}</th>
+                <th>{{ 'admin.users.headings.email' | trans }}</th>
+                <th>{{ 'admin.users.headings.enabled' | trans }}</th>
+                <th>{{ 'admin.users.headings.roles' | trans }}</th>
+                <th>{{ 'admin.users.headings.lastlogin' | trans }}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.enabled %}
+                            {{ 'yes'|trans }}
+                        {% else %}
+                            {{ 'no'|trans }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for role in user.roles %}
+                            [{{ "roles.#{role}" | trans }}]
+                        {% endfor %}
+                    </td>
+                    <td>{{ user.lastLogin | date("Y-m-d H:i") }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
