@@ -14,6 +14,8 @@ The masterserver is a PHP application build with symfony 2.6 and requires a mysq
 
 The code and installation instructions for the client is available in [its own repository](https://github.com/BrixIT/Brixmond)
 
+This project is translated in Enlish and Dutch.
+
 ## Masterserver installation
 
 ```bash
