@@ -15,11 +15,12 @@ class DefaultController extends Controller
 
     public function graphAction()
     {
+        $translator = $this->get('translator');
         $response = ['digraph {'];
         $response[] = '    rankdir=RL;';
         $response[] = '    node [rx=5 ry=5 labelStyle="font: 300 14px sans-serif"]';
         $response[] = '    edge [labelStyle="font: 300 14px sans-serif"]';
-        $response[] = '    internet [label="Internet" style="fill: #0099ff;"];';
+        $response[] = '    internet [label="' . $translator->trans('overview.internet') . '" style="fill: #0099ff;"];';
 
         $hosts = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Host')->findAll();
         foreach ($hosts as $host) {
