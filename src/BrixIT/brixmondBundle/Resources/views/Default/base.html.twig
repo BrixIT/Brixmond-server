@@ -20,6 +20,9 @@
     <span class="auth pull-right">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            {% if is_granted('ROLE_USER') %}
+                <a href="/admin">Settings</a> |
+                {% endif %}
             <a href="{{ path('fos_user_security_logout') }}">
                 {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
             </a>&nbsp;&nbsp;
