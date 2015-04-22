@@ -1,5 +1,5 @@
 <div class="panel panel-default" id="loginpanel">
-    <div class="panel-heading">Change password</div>
+    <div class="panel-heading">{{ 'auth.pwreset' | trans }}</div>
     <div class="panel-body">
         <form action="{{ path('fos_user_resetting_send_email') }}" method="POST"
               class="fos_user_resetting_request form">
@@ -13,7 +13,7 @@
             <br>
 
             <div>
-                <a href="/login" class="btn btn-default pull-right">Back to login</a>
+                <a href="/login" class="btn btn-default pull-right">{{ 'auth.backtologin' | trans }}</a>
                 <input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}"
                        class="btn btn-primary">
             </div>

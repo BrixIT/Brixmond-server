@@ -1,3 +1,8 @@
+auth:
+    login: Login
+    pwreset: Reset password
+    backtologin: Back to login
+
 overview:
     title: Overview
     internet: Internet

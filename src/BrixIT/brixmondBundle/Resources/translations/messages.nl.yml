@@ -1,3 +1,8 @@
+auth:
+    login: Inloggen
+    pwreset: Wachtwoord resetten
+    backtologin: Terug naar loginscherm
+
 overview:
     title: Overzicht
     internet: Internet

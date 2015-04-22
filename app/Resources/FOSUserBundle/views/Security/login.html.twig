@@ -5,7 +5,7 @@
         <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
     <div class="panel panel-default" id="loginpanel">
-        <div class="panel-heading">Login</div>
+        <div class="panel-heading">{{ 'auth.login' | trans }}</div>
         <div class="panel-body">
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
@@ -21,7 +21,7 @@
                         <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
                     </label>
                 </div>
-                <a href="{{ path("fos_user_resetting_request") }}" class="btn btn-default pull-right">Reset password</a>
+                <a href="{{ path("fos_user_resetting_request") }}" class="btn btn-default pull-right">{{ 'auth.pwreset' | trans }}</a>
                 <input type="submit" id="_submit" name="_submit" class="btn btn-primary"
                        value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}"/>
             </form>
