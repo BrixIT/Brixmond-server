@@ -7,6 +7,10 @@ auth:
     pwreset: Reset password
     backtologin: Back to login
 
+roles:
+    ROLE_USER: User
+    ROLE_ADMIN: Admin
+
 overview:
     title: Overview
     internet: Internet

@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     {% for role in user.roles %}
-                        [{{ role }}]
+                        [{{ "roles.#{role}" | trans }}]
                     {% endfor %}
                 </td>
                 <td>{{ user.lastLogin | date("Y-m-d H:i") }}</td>

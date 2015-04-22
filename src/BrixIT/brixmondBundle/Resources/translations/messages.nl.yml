@@ -7,6 +7,10 @@ auth:
     pwreset: Wachtwoord resetten
     backtologin: Terug naar loginscherm
 
+roles:
+    ROLE_USER: Gebruiker
+    ROLE_ADMIN: Administrator
+
 overview:
     title: Overzicht
     internet: Internet
