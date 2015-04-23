@@ -12,9 +12,47 @@ roles:
     ROLE_ADMIN: Admin
     ROLE_SUPER_ADMIN: Superadmin
 
+timedomain:
+    15min: 15 Min.
+    hour: 1 Hour
+    halfday: 12 Hours
+    day:  1 Day
+
 overview:
     title: Overview
     internet: Internet
+
+charts:
+    title: Charts
+    backtodashboard: Back to dashboard
+    titles:
+        serverinfo: Server information
+        systemload: System load
+        cpuusage: CPU Usage
+        top5processes: Top 5 processes
+        physicalmemory: Physical memory
+        swap: Swap
+        networkpackets: Network packets
+        networkbytes: Network bytes
+        networkerrors: Network errors
+        networksockets: Sockets
+        diskusage: Disk usage and mounts
+    headings:
+        serverinfo:
+            fqdn: FQDN
+            cpu: CPU
+            arch: Arch
+            distro: Distro
+        top5processes:
+            process: Process
+            cpu: CPU
+            mem: Mem
+        diskusage:
+            device: Device
+            mountpoint: Mountpoint
+            type: Type
+            size: Size
+            used: Used
 
 admin:
     title:
