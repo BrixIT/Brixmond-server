@@ -100,4 +100,21 @@ class AdminController extends Controller
         ];
         return $this->render('BrixITbrixmondBundle:Admin:host_edit.html.twig', $context);
     }
+
+    public function hostRemoveAction($id)
+    {
+        $host = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Host')->find($id);
+
+        $children = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Host')->findBy([
+            'parent' => $host
+        ]);
+        $manager = $this->getDoctrine()->getManager();
+        foreach ($children as $childHost) {
+            $childHost->setParent($host->getParent());
+            $manager->persist($childHost);
+        }
+        $manager->remove($host);
+        $manager->flush();
+        return $this->redirectToRoute('admin_hosts', [], 303);
+    }
 }

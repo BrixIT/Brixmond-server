@@ -90,6 +90,9 @@ admin:
             vm: VM
             vps: VPS
 
+        buttons:
+            add: Host toevoegen
+
         form:
             name:
                 label: Naam
@@ -111,3 +114,8 @@ admin:
                   met internet.
             save:
                 label: Opslaan
+
+entity:
+    edit: Bewerken
+    remove: Verwijderen
+    add: Toevoegen

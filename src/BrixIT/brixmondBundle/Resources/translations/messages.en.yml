@@ -91,6 +91,9 @@ admin:
             vm: VM
             vps: VPS
 
+        buttons:
+            add: Add host
+
         form:
             name:
                 label: Name
@@ -111,3 +114,8 @@ admin:
                   Leave blank to render it connected directly to the internet.
             save:
                 label: Save
+
+entity:
+    edit: Edit
+    remove: Remove
+    add: Add

@@ -77,3 +77,7 @@ admin_host_edit:
 admin_host_add:
     path:     /admin/host/add
     defaults: { _controller: BrixITbrixmondBundle:Admin:hostEdit, id:new }
+
+admin_host_remove:
+    path:     /admin/hosts/{id}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostRemove }
