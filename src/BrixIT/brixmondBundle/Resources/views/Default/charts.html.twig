@@ -1,7 +1,7 @@
 {% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
 {% import "BrixITbrixmondBundle:Default:macros.html.twig" as macros %}
 
-{% block headerbar %}&raquo; Graphs &raquo; </span>{{ fqdn }}<span class="hidden-xs"> ({{ timedomainLabel }})</span>{% endblock %}
+{% block headerbar %}&raquo; {{ 'charts.title' | trans }} &raquo; </span>{{ fqdn }}<span class="hidden-xs"> ({{ ('timedomain.' ~ timedomain) | trans }})</span>{% endblock %}
 
 {% block scripts %}
     <script src="{{ asset('js/chart.js') }}"></script>
@@ -10,39 +10,50 @@
 {% block main %}
     <div class="row">
         <div class="col-xs-12" id="buttonrow">
-            <a href="/" class="btn btn-default">&laquo; Back to dashboard</a>
+            <a href="{{ path('home') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                {{ 'backtodashboard' | trans }}
+            </a>
 
             <div class="btn-group" role="group">
-                <a href="/graphs/{{ fqdn }}/5min"
-                   class="btn btn-{% if timedomain=='5min' %}primary{% else %}default{% endif %}">5 Min.</a>
-                <a href="/graphs/{{ fqdn }}/hour"
-                   class="btn btn-{% if timedomain=='hour' %}primary{% else %}default{% endif %}">1 Hour</a>
-                <a href="/graphs/{{ fqdn }}/halfday"
-                   class="btn btn-{% if timedomain=='halfday' %}primary{% else %}default{% endif %}">12 Hours</a>
-                <a href="/graphs/{{ fqdn }}/day"
-                   class="btn btn-{% if timedomain=='day' %}primary{% else %}default{% endif %}">1 Day</a>
+                <a href="{{ path('server_charts', {'timedomain': '15min', 'fqdn': fqdn}) }}"
+                   class="btn btn-{% if timedomain=='15min' %}primary{% else %}default{% endif %}">
+                    {{ 'timedomain.15min' | trans }}
+                </a>
+                <a href="{{ path('server_charts', {'timedomain': 'hour', 'fqdn': fqdn}) }}"
+                   class="btn btn-{% if timedomain=='hour' %}primary{% else %}default{% endif %}">
+                    {{ 'timedomain.hour' | trans }}
+                </a>
+                <a href="{{ path('server_charts', {'timedomain': 'halfday', 'fqdn': fqdn}) }}"
+                   class="btn btn-{% if timedomain=='halfday' %}primary{% else %}default{% endif %}">
+                    {{ 'timedomain.halfday' | trans }}
+                </a>
+                <a href="{{ path('server_charts', {'timedomain': 'day', 'fqdn': fqdn}) }}"
+                   class="btn btn-{% if timedomain=='day' %}primary{% else %}default{% endif %}">
+                    {{ 'timedomain.day' | trans }}
+                </a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Server info</div>
+                <div class="panel-heading">{{ 'charts.titles.serverinfo' | trans }}</div>
                 <table class="table table-striped">
                     <tr>
-                        <th>FQDN</th>
+                        <th>{{ 'charts.headings.serverinfo.fqdn' | trans }}</th>
                         <td>{{ fqdn }}</td>
                     </tr>
                     <tr>
-                        <th>CPU</th>
+                        <th>{{ 'charts.headings.serverinfo.cpu' | trans }}</th>
                         <td>{{ client.cpu }}</td>
                     </tr>
                     <tr>
-                        <th>Arch</th>
+                        <th>{{ 'charts.headings.serverinfo.arch' | trans }}</th>
                         <td>{{ client.arch }}</td>
                     </tr>
                     <tr>
-                        <th>Distro</th>
+                        <th>{{ 'charts.headings.serverinfo.distro' | trans }}</th>
                         <td>{{ client.dist }}</td>
                     </tr>
                 </table>
@@ -52,7 +63,7 @@
         <div class="col-sm-12 col-md-12 col-lg-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    System load
+                    {{ 'charts.titles.systemload' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-system-load">
                     <script>
@@ -66,7 +77,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    CPU Usage
+                    {{ 'charts.titles.cpuusage' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-cpu">
                     <script>
@@ -78,34 +89,44 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Top 5 processes
+                    {{ 'charts.titles.top5processes' | trans }}
                 </div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Process</th>
-                        <th>CPU</th>
-                        <th>Mem</th>
+                        <th>{{ 'charts.headings.top5processes.process' | trans }}</th>
+                        <th>{{ 'charts.headings.top5processes.cpu' | trans }}</th>
+                        <th>{{ 'charts.headings.top5processes.mem' | trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for process in info.processes.value %}
+                    {% if info.processes is defined %}
+                        {% for process in info.processes.value %}
+                            <tr>
+                                <td title="{{ process.name }}" class="ellipsis">
+                                    <div class="ellipsis">{{ process.name }}</div>
+                                </td>
+                                <td width="100">{{ process.cpu | number_format(2, '.') }}%</td>
+                                <td width="100">{{ process.mem | number_format(2, '.') }}%</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td title="{{ process.name }}" class="ellipsis">
-                                <div class="ellipsis">{{ process.name }}</div>
+                            <td colspan="3">
+                                No data yet.
                             </td>
-                            <td width="100">{{ process.cpu | number_format(2, '.') }}%</td>
-                            <td width="100">{{ process.mem | number_format(2, '.') }}%</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Physical memory
+                    {{ 'charts.titles.physicalmemory' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-memory">
                     <script>
@@ -117,7 +138,7 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Swap
+                    {{ 'charts.titles.swap' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-swap">
                     <script>
@@ -133,7 +154,7 @@
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Network packets
+                    {{ 'charts.titles.networkpackets' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-net-packets">
                     <script>
@@ -145,7 +166,7 @@
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Network bytes
+                    {{ 'charts.titles.networkbytes' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-net-bytes">
                     <script>
@@ -157,7 +178,7 @@
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Network errors
+                    {{ 'charts.titles.networkerrors' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-net-errors">
                     <script>
@@ -169,7 +190,7 @@
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Network socket stats
+                    {{ 'charts.titles.networksockets' | trans }}
                 </div>
                 <div class="panel-graph" id="graph-sockets">
                     <script>
@@ -184,16 +205,16 @@
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Disk usage and mounts
+                    {{ 'charts.titles.diskusage' | trans }}
                 </div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Device</th>
-                        <th>Mountpoint</th>
-                        <th>Type</th>
-                        <th>Size</th>
-                        <th>Used</th>
+                        <th>{{ 'charts.headings.diskusage.device' | trans }}</th>
+                        <th>{{ 'charts.headings.diskusage.mountpoint' | trans }}</th>
+                        <th>{{ 'charts.headings.diskusage.type' | trans }}</th>
+                        <th>{{ 'charts.headings.diskusage.size' | trans }}</th>
+                        <th>{{ 'charts.headings.diskusage.used' | trans }}</th>
                     </tr>
                     </thead>
                     <tbody>

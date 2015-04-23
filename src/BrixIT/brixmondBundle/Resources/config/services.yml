@@ -6,3 +6,8 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+
+    user_notifier:
+        class: BrixIT\brixmondBundle\Util\UserNotifier
+        calls:
+              - [ setContainer,[ @service_container ] ]

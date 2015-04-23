@@ -77,7 +77,7 @@ class Host
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -100,7 +100,7 @@ class Host
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -123,7 +123,7 @@ class Host
     /**
      * Get hostname
      *
-     * @return string 
+     * @return string
      */
     public function getHostname()
     {
@@ -146,7 +146,7 @@ class Host
     /**
      * Get client
      *
-     * @return integer 
+     * @return integer
      */
     public function getClient()
     {
@@ -169,7 +169,7 @@ class Host
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -192,7 +192,7 @@ class Host
     /**
      * Get ping
      *
-     * @return integer 
+     * @return integer
      */
     public function getPing()
     {
@@ -215,7 +215,7 @@ class Host
     /**
      * Get state
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getState()
     {
@@ -238,18 +238,21 @@ class Host
     /**
      * Get parent
      *
-     * @return integer 
+     * @return integer
      */
     public function getParent()
     {
         return $this->parent;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ping = 0;
+        $this->state = true;
     }
 
     /**
@@ -278,10 +281,17 @@ class Host
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
         return $this->children;
     }
+
+    function __toString()
+    {
+        return $this->name . ' [' . $this->hostname . ']';
+    }
+
+
 }

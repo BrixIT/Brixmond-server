@@ -351,4 +351,10 @@ class Client
     {
         return $this->info;
     }
+
+    function __toString()
+    {
+        return $this->fqdn;
+    }
+
 }

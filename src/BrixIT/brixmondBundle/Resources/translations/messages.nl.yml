@@ -9,11 +9,50 @@ auth:
 
 roles:
     ROLE_USER: Gebruiker
-    ROLE_ADMIN: Administrator
+    ROLE_ADMIN: Beheerder
+    ROLE_SUPER_ADMIN: Hoofd beheerder
+
+timedomain:
+    15min: 15 Min.
+    hour: 1 Uur
+    halfday: 12 Uren
+    day:  1 Dag
 
 overview:
     title: Overzicht
     internet: Internet
+
+charts:
+    title: Grafieken
+    backtodashboard: Terug naar overzicht
+    titles:
+        serverinfo: Server informatie
+        systemload: Systeembelasting
+        cpuusage: CPU Gebruik
+        top5processes: Top 5 processen
+        physicalmemory: Fysiek geheugen
+        swap: Swap
+        networkpackets: Netwerk paketten
+        networkbytes: Netwerk bytes
+        networkerrors: Netwerk fouten
+        networksockets: Sockets
+        diskusage: Schijfgebruik en mounts
+    headings:
+        serverinfo:
+            fqdn: FQDN
+            cpu: CPU
+            arch: Arch
+            distro: Distro
+        top5processes:
+            process: Programma
+            cpu: CPU
+            mem: Geh.
+        diskusage:
+            device: Apparaat
+            mountpoint: Mount punt
+            type: Type
+            size: Grootte
+            used: Gebruikt
 
 admin:
     title:
@@ -27,8 +66,14 @@ admin:
             email: E-mail
             enabled: Ingeschakeld
             roles: Rollen
+            pushoverkey: Pushover code
             lastlogin: Laatste login
-        add: Gebruiker toevoegen
+
+        buttons:
+            add: Gebruiker toevoegen
+            testnotification: Test meldingen
+            remove: Gebruiker verwijderen
+            edit: Bewerken
 
     servers:
         headings:
@@ -38,3 +83,45 @@ admin:
             messages: Berichten
         new: Nieuwe servers
         active: Actieve servers
+
+    hosts:
+        headings:
+            hostname: Computernaam
+            name: Naam
+            type: Type
+            parent: Bovenliggende host
+        types:
+            server: Server
+            edgerouter: Edge router
+            vm: VM
+            vps: VPS
+
+        buttons:
+            add: Host toevoegen
+
+        form:
+            name:
+                label: Naam
+                help: Deze naam word weergegeven in de blokken van de overzichtspagina.
+            hostname:
+                label: Computernaam
+                help: De IP of computernaam van deze host, word intern gebruikt voor ping tests.
+            type:
+                label: Type
+                help: Dit veranderd hoe deze host er uit ziet op de overzichtspagina.
+            client:
+                label: Client
+                help: Als deze host een Brixmond client heeft draaien kan die hier worden gekoppeld.
+            parent:
+                label: Parent
+                help: >
+                  Kies hier de bovenliggende host die bij deze host hoort (zoals de hypervisor voor een VM of een
+                  edge router voor een hypervisor). Als dit veld leeggelaten word dan word de host direct verbonden
+                  met internet.
+            save:
+                label: Opslaan
+
+entity:
+    edit: Bewerken
+    remove: Verwijderen
+    add: Toevoegen

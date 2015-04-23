@@ -11,7 +11,7 @@ class ServerDataController extends Controller
     {
         $domains = [
             'hour' => '1 hours',
-            '5min' => '5 minutes',
+            '15min' => '15 minutes',
             'halfday' => '12 hours',
             'day' => '24 hours'
         ];

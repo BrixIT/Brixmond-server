@@ -14,9 +14,9 @@ home_graph:
     path:     /graph
     defaults: { _controller: BrixITbrixmondBundle:Default:graph }
 
-server_graphs:
-    path:     /graphs/{fqdn}/{timedomain}
-    defaults: { _controller: BrixITbrixmondBundle:ServerPage:graphs, timedomain: hour }
+server_charts:
+    path:     /charts/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:charts, timedomain: hour }
 
 ajax_system_load:
     path:     /ajax/system-load/{fqdn}/{timedomain}
@@ -65,3 +65,35 @@ admin_server_reject:
 admin_users:
     path:     /admin/users
     defaults: { _controller: BrixITbrixmondBundle:Admin:users }
+
+admin_hosts:
+    path:     /admin/hosts
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hosts }
+
+admin_host_edit:
+    path:     /admin/hosts/{id}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostEdit }
+
+admin_host_add:
+    path:     /admin/host/add
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostEdit, id:new }
+
+admin_host_remove:
+    path:     /admin/hosts/{id}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostRemove }
+
+admin_user_edit:
+    path:     /admin/users/{username}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userEdit }
+
+admin_user_add:
+    path:     /admin/user/new
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userEdit, username:new }
+
+admin_user_remove:
+    path:     /admin/users/{username}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userRemove }
+
+admin_user_notification:
+    path:     /admin/users/{username}/notify
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userNotify }

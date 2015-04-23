@@ -8,12 +8,26 @@
     <div class="row">
         <div class="col-lg-2">
             <div class="list-group">
+                <a href="{{ path('home') }}" class="list-group-item">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    {{ 'backtodashboard'|trans }}
+                </a>
+            </div>
+
+            <div class="list-group">
                 <a href="{{ path('admin_servers') }}"
                    class="list-group-item{% if app.request.get('_route') == 'admin_servers' %} active{% endif %}">
+                    <span class="glyphicon glyphicon-align-justify"></span>
                     {{ 'admin.title.servers'|trans }}
+                </a>
+                <a href="{{ path('admin_hosts') }}"
+                   class="list-group-item{% if app.request.get('_route') == 'admin_hosts' %} active{% endif %}">
+                    <span class="glyphicon glyphicon-wrench"></span>
+                    {{ 'admin.title.hosts'|trans }}
                 </a>
                 <a href="{{ path('admin_users') }}"
                    class="list-group-item{% if app.request.get('_route') == 'admin_users' %} active{% endif %}">
+                    <span class="glyphicon glyphicon-user"></span>
                     {{ 'admin.title.users'|trans }}
                 </a>
             </div>

@@ -1,0 +1,42 @@
+{% extends "BrixITbrixmondBundle:Admin:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title.base' | trans }} &raquo; {{ 'admin.title.hosts' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block admin %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            <p class="help-block">
+                {{ 'admin.hosts.form.name.help' | trans }}
+            </p>
+
+            {{ form_row(form.hostname) }}
+            <p class="help-block">
+                {{ 'admin.hosts.form.hostname.help' | trans }}
+            </p>
+
+            {{ form_row(form.type) }}
+            <p class="help-block">
+                {{ 'admin.hosts.form.type.help' | trans }}
+            </p>
+
+            {{ form_row(form.client) }}
+            <p class="help-block">
+                {{ 'admin.hosts.form.client.help' | trans }}
+            </p>
+
+            {{ form_row(form.parent) }}
+            <p class="help-block">
+                {{ 'admin.hosts.form.parent.help' | trans }}
+            </p>
+
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
