@@ -89,19 +89,29 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for process in info.processes.value %}
+                    {% if info.processes is defined %}
+                        {% for process in info.processes.value %}
+                            <tr>
+                                <td title="{{ process.name }}" class="ellipsis">
+                                    <div class="ellipsis">{{ process.name }}</div>
+                                </td>
+                                <td width="100">{{ process.cpu | number_format(2, '.') }}%</td>
+                                <td width="100">{{ process.mem | number_format(2, '.') }}%</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td title="{{ process.name }}" class="ellipsis">
-                                <div class="ellipsis">{{ process.name }}</div>
+                            <td colspan="3">
+                                No data yet.
                             </td>
-                            <td width="100">{{ process.cpu | number_format(2, '.') }}%</td>
-                            <td width="100">{{ process.mem | number_format(2, '.') }}%</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
