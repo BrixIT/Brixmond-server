@@ -77,3 +77,37 @@ admin:
             messages: Berichten
         new: Nieuwe servers
         active: Actieve servers
+
+    hosts:
+        headings:
+            hostname: Computernaam
+            name: Naam
+            type: Type
+            parent: Bovenliggende host
+        types:
+            server: Server
+            edgerouter: Edge router
+            vm: VM
+            vps: VPS
+
+        form:
+            name:
+                label: Naam
+                help: Deze naam word weergegeven in de blokken van de overzichtspagina.
+            hostname:
+                label: Computernaam
+                help: De IP of computernaam van deze host, word intern gebruikt voor ping tests.
+            type:
+                label: Type
+                help: Dit veranderd hoe deze host er uit ziet op de overzichtspagina.
+            client:
+                label: Client
+                help: Als deze host een Brixmond client heeft draaien kan die hier worden gekoppeld.
+            parent:
+                label: Parent
+                help: >
+                  Kies hier de bovenliggende host die bij deze host hoort (zoals de hypervisor voor een VM of een
+                  edge router voor een hypervisor). Als dit veld leeggelaten word dan word de host direct verbonden
+                  met internet.
+            save:
+                label: Opslaan

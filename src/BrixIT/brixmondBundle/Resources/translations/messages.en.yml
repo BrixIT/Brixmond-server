@@ -59,6 +59,7 @@ admin:
         base: Settings
         servers: Servers
         users: Users
+        hosts: Hosts
 
     users:
         headings:
@@ -77,3 +78,36 @@ admin:
             messages: Messages
         new: New servers
         active: Active servers
+
+    hosts:
+        headings:
+            hostname: Hostname
+            name: Name
+            type: Type
+            parent: Parent
+        types:
+            server: Server
+            edgerouter: Edge router
+            vm: VM
+            vps: VPS
+
+        form:
+            name:
+                label: Name
+                help: This is the name displayed on the server graph.
+            hostname:
+                label: Hostname
+                help: The IP or hostname for this host. Used by ping tests.
+            type:
+                label: Type
+                help: This changes how the node is rendered in the server graph.
+            client:
+                label: Client
+                help: If this host has the Brixmond client running then you can link it to a client here.
+            parent:
+                label: Parent
+                help: >
+                  Choose the upstream node for this node (like the hypervisor for a vm or a edge router for a hypervisor).
+                  Leave blank to render it connected directly to the internet.
+            save:
+                label: Save

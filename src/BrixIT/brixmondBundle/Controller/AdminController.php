@@ -3,8 +3,10 @@
 namespace BrixIT\brixmondBundle\Controller;
 
 use BrixIT\brixmondBundle\Entity\Host;
+use BrixIT\brixmondBundle\Form\HostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
@@ -63,5 +65,39 @@ class AdminController extends Controller
             'users' => $users
         ];
         return $this->render('BrixITbrixmondBundle:Admin:users.html.twig', $context);
+    }
+
+    public function hostsAction()
+    {
+        $hosts = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Host')->findAll();
+
+        $context = [
+            'hosts' => $hosts
+        ];
+        return $this->render('BrixITbrixmondBundle:Admin:hosts.html.twig', $context);
+    }
+
+    public function hostEditAction(Request $request, $id)
+    {
+        if ($id === 'new') {
+            $host = new Host();
+        } else {
+            $host = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Host')->find($id);
+        }
+        $form = $this->createForm(new HostType(), $host);
+        $form->add('save', 'submit', array('label' => 'admin.hosts.form.save.label'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($host);
+            $manager->flush();
+            return $this->redirectToRoute('admin_hosts', [], 303);
+        }
+        $context = [
+            'form' => $form->createView()
+        ];
+        return $this->render('BrixITbrixmondBundle:Admin:host_edit.html.twig', $context);
     }
 }

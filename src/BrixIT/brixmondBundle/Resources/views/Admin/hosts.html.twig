@@ -1,0 +1,50 @@
+{% extends "BrixITbrixmondBundle:Admin:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title.base' | trans }} &raquo; {{ 'admin.title.hosts' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block admin %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="#" class="btn btn-default">Add host</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'admin.hosts.headings.name' | trans }}</th>
+                <th>{{ 'admin.hosts.headings.hostname' | trans }}</th>
+                <th>{{ 'admin.hosts.headings.type' | trans }}</th>
+                <th>{{ 'admin.hosts.headings.parent' | trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for host in hosts %}
+                <tr>
+                    <td>
+                        {{ host.name }}
+                    </td>
+                    <td>
+                        {{ host.hostname }}
+                    </td>
+                    <td>
+                        {{ ("admin.hosts.types." ~ host.type) | trans }}
+                    </td>
+                    <td>
+                        {% if host.parent is null %}
+                            Internet
+                        {% else %}
+                            {{ host.parent.name }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_host_edit', {'id': host.id}) }}" class="btn btn-default btn-sm">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

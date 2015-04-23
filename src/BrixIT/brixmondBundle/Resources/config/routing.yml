@@ -65,3 +65,15 @@ admin_server_reject:
 admin_users:
     path:     /admin/users
     defaults: { _controller: BrixITbrixmondBundle:Admin:users }
+
+admin_hosts:
+    path:     /admin/hosts
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hosts }
+
+admin_host_edit:
+    path:     /admin/hosts/{id}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostEdit }
+
+admin_host_add:
+    path:     /admin/host/add
+    defaults: { _controller: BrixITbrixmondBundle:Admin:hostEdit, id:new }
