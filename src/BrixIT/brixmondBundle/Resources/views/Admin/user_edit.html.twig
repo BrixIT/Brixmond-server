@@ -1,0 +1,27 @@
+{% extends "BrixITbrixmondBundle:Admin:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title.base' | trans }} &raquo; {{ 'admin.title.users' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block admin %}
+    <div class="panel panel-default">
+        {% if not isnew %}
+            <div class="panel-body">
+                <a href="{{ path('admin_user_notification', {'username': user.username}) }}" class="btn btn-default">
+                    {{ 'admin.users.button.testnotifications' | trans }}
+                </a>
+                <a href="{{ path('admin_user_remove', {'username': user.username}) }}" class="btn btn-danger">
+                    {{ 'admin.users.button.remove' | trans }}
+                </a>
+            </div>
+        {% endif %}
+        <div class="panel-body">
+
+
+            {{ form_start(form, { 'attr': {'autocomplete': 'off'} }) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

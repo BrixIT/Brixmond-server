@@ -7,7 +7,7 @@
 {% block admin %}
     <div class="panel panel-default">
         <div class="panel-body">
-            <a href="#" class="btn btn-default">{{ 'admin.users.add' | trans }}</a>
+            <a href="{{ path('admin_user_add') }}" class="btn btn-default">{{ 'admin.users.buttons.add' | trans }}</a>
         </div>
         <table class="table">
             <thead>
@@ -16,7 +16,9 @@
                 <th>{{ 'admin.users.headings.email' | trans }}</th>
                 <th>{{ 'admin.users.headings.enabled' | trans }}</th>
                 <th>{{ 'admin.users.headings.roles' | trans }}</th>
+                <th>{{ 'admin.users.headings.pushoverkey' | trans }}</th>
                 <th>{{ 'admin.users.headings.lastlogin' | trans }}</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +38,20 @@
                             [{{ "roles.#{role}" | trans }}]
                         {% endfor %}
                     </td>
+                    <td>
+                        {% if user.pushoverKey is null %}
+                            Not set
+                        {% else %}
+                            {{ user.pushoverKey }}
+                        {% endif %}
+                    </td>
                     <td>{{ user.lastLogin | date("Y-m-d H:i") }}</td>
+                    <td>
+                        <a href="{{ path('admin_user_edit', {'username': user.username}) }}"
+                           class="btn btn-default btn-sm">
+                            {{ 'admin.users.buttons.edit' | trans }}
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

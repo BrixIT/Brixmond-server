@@ -67,8 +67,14 @@ admin:
             email: E-mail
             enabled: Enabled
             roles: Roles
+            pushoverkey: Pushover Key
             lastlogin: Last login
-        add: Add user
+
+        buttons:
+            add: Add user
+            testnotification: Test notifications
+            remove: Remove user
+            edit: Edit
 
     servers:
         headings:

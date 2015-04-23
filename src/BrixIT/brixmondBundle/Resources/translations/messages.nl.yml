@@ -66,8 +66,14 @@ admin:
             email: E-mail
             enabled: Ingeschakeld
             roles: Rollen
+            pushoverkey: Pushover code
             lastlogin: Laatste login
-        add: Gebruiker toevoegen
+
+        buttons:
+            add: Gebruiker toevoegen
+            testnotification: Test meldingen
+            remove: Gebruiker verwijderen
+            edit: Bewerken
 
     servers:
         headings:

@@ -3,11 +3,17 @@
 namespace BrixIT\brixmondBundle\Controller;
 
 use BrixIT\brixmondBundle\Entity\Host;
+use BrixIT\brixmondBundle\Entity\User;
 use BrixIT\brixmondBundle\Form\HostType;
+use BrixIT\brixmondBundle\Form\UserType;
+use BrixIT\brixmondBundle\Model\UserNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sly\PushOver\Model\Push;
+use Sly\PushOver\PushManager;
+
 
 class AdminController extends Controller
 {
@@ -116,5 +122,48 @@ class AdminController extends Controller
         $manager->remove($host);
         $manager->flush();
         return $this->redirectToRoute('admin_hosts', [], 303);
+    }
+
+    public function userEditAction(Request $request, $username)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        if ($username === 'new') {
+            $user = new User();
+        } else {
+            $user = $userManager->findUserByUsername($username);
+        }
+        $form = $this->createForm(new UserType(), $user);
+        $form->add('save', 'submit', array('label' => 'admin.hosts.form.save.label'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $userManager->updateUser($user, true);
+            return $this->redirectToRoute('admin_users', [], 303);
+        }
+        $context = [
+            'form' => $form->createView(),
+            'user' => $user,
+            'isnew' => $username === 'new'
+        ];
+        return $this->render('BrixITbrixmondBundle:Admin:user_edit.html.twig', $context);
+    }
+
+    public function userNotifyAction($username)
+    {
+        $notification = new UserNotification();
+        $notification->setTitle('Brixmond test message');
+        $notification->setMessage('If you see this then it\'s probably working');
+        $notification->setUrl($this->generateUrl('home', [], true));
+        $notification->setAction('Open the dashboard');
+        $this->get('user_notifier')->notify($username, $notification);
+        return $this->redirectToRoute('admin_user_edit', ['username' => $username], 303);
+    }
+
+    public function userRemoveAction($username)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $userManager->deleteUser($userManager->findUserByUsername($username));
+        return $this->redirectToRoute('admin_users', [], 303);
     }
 }

@@ -79,3 +79,5 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: BrixIT\brixmondBundle\Entity\User
+    group:
+        group_class: BrixIT\brixmondBundle\Entity\Group

@@ -81,3 +81,19 @@ admin_host_add:
 admin_host_remove:
     path:     /admin/hosts/{id}/remove
     defaults: { _controller: BrixITbrixmondBundle:Admin:hostRemove }
+
+admin_user_edit:
+    path:     /admin/users/{username}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userEdit }
+
+admin_user_add:
+    path:     /admin/user/new
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userEdit, username:new }
+
+admin_user_remove:
+    path:     /admin/users/{username}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userRemove }
+
+admin_user_notification:
+    path:     /admin/users/{username}/notify
+    defaults: { _controller: BrixITbrixmondBundle:Admin:userNotify }
