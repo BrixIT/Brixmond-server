@@ -9,10 +9,10 @@
         {% if not isnew %}
             <div class="panel-body">
                 <a href="{{ path('admin_user_notification', {'username': user.username}) }}" class="btn btn-default">
-                    {{ 'admin.users.button.testnotifications' | trans }}
+                    {{ 'admin.users.buttons.testnotifications' | trans }}
                 </a>
                 <a href="{{ path('admin_user_remove', {'username': user.username}) }}" class="btn btn-danger">
-                    {{ 'admin.users.button.remove' | trans }}
+                    {{ 'admin.users.buttons.remove' | trans }}
                 </a>
             </div>
         {% endif %}

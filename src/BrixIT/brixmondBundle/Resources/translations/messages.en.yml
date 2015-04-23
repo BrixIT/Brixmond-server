@@ -72,7 +72,7 @@ admin:
 
         buttons:
             add: Add user
-            testnotification: Test notifications
+            testnotifications: Test notifications
             remove: Remove user
             edit: Edit
 

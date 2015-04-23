@@ -71,7 +71,7 @@ admin:
 
         buttons:
             add: Gebruiker toevoegen
-            testnotification: Test meldingen
+            testnotifications: Test meldingen
             remove: Gebruiker verwijderen
             edit: Bewerken
 

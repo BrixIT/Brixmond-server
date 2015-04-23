@@ -23,9 +23,10 @@ class UserType extends AbstractType
             ->add('password', 'password', [
                 'attr' => [
                     'autocomplete' => 'off'
-                ]
+                ],
+                'required' => false
             ])
-            ->add('email')
+            ->add('email', 'email')
             ->add('pushoverKey');
 
         $options['attr']['autocomplete'] = 'off';
