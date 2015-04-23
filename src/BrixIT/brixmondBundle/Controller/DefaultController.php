@@ -44,7 +44,8 @@ class DefaultController extends Controller
             }
             if ($host->getClient() != null) {
                 $parameters['labelType'] = 'html';
-                $parameters['label'] = "<a href='/graphs/" . $host->getClient()->getFQDN() . "'>" . $host->getName() . "</a>";
+                $url = $this->generateUrl('server_charts', ['fqdn' => $host->getClient()->getFQDN()]);
+                $parameters['label'] = "<a href='" . $url . "'>" . $host->getName() . "</a>";
             }
             $parameterPart = [];
             foreach ($parameters as $key => $value) {
