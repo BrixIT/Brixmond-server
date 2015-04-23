@@ -10,7 +10,10 @@
 {% block main %}
     <div class="row">
         <div class="col-xs-12" id="buttonrow">
-            <a href="/" class="btn btn-default">&laquo; {{ 'charts.backtodashboard' | trans }}</a>
+            <a href="{{ path('home') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                {{ 'backtodashboard' | trans }}
+            </a>
 
             <div class="btn-group" role="group">
                 <a href="{{ path('server_charts', {'timedomain': '15min', 'fqdn': fqdn}) }}"
