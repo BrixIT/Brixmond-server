@@ -2,6 +2,7 @@
 
 namespace BrixIT\brixmondBundle\Controller;
 
+use BrixIT\brixmondBundle\Entity\Host;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,17 @@ class AdminController extends Controller
         $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->find($id);
         $client->setEnabled(true);
         $manager = $this->getDoctrine()->getManager();
+
+        $host = new Host();
+        $host->setClient($client);
+        $host->setName($client->getFqdn());
+        $host->setHostname($client->getFqdn());
+        $host->setPing(0);
+        $host->setState(true);
+        $host->setType('server');
+
         $manager->persist($client);
+        $manager->persist($host);
         $manager->flush();
         return $this->redirectToRoute('admin_servers', [], 303);
     }
