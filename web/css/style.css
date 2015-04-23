@@ -6560,6 +6560,13 @@ body > header {
   text-shadow: 0 0 1px #000000;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
+.auth a {
+  color: #008fe7;
+}
+.auth a:hover {
+  color: #1ba8ff;
+  text-decoration: none;
+}
 main {
   padding-top: 10px;
 }

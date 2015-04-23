@@ -3,7 +3,6 @@
 @body-bg: #eee;
 @icon-font-path: "/components/bootstrap/fonts/";
 
-
 body > header {
   height: 48px;
   line-height: 48px;
@@ -18,6 +17,18 @@ body > header {
   text-shadow: 0 0 1px #000000;
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.auth {
+  @header-link-color: #008fe7;
+
+  a {
+    color: @header-link-color;
+    &:hover {
+      color: lighten(@header-link-color, 10%);
+      text-decoration: none;
+    }
+  }
 }
 
 main {
@@ -69,6 +80,7 @@ div.ellipsis {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
 td.ellipsis {
   max-width: 0;
 }

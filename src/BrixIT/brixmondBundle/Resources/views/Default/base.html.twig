@@ -22,10 +22,10 @@
             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
             {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('admin_servers') }}">{{ 'settings' | trans }}</a> |
-                {% endif %}
+            {% endif %}
             <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a>&nbsp;&nbsp;
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a>&nbsp;&nbsp;
         {% endif %}
     </span>
 </header>
