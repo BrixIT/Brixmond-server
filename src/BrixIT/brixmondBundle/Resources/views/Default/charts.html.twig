@@ -33,6 +33,11 @@
                     {{ 'timedomain.day' | trans }}
                 </a>
             </div>
+
+            <a href="{{ path('home') }}" class="btn btn-default">
+                {{ 'charts.buttons.messages' | trans }}
+                <span class="badge">{{ client.messages.count }}</span>
+            </a>
         </div>
     </div>
     <div class="row">

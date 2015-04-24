@@ -37,6 +37,8 @@ charts:
         networkerrors: Network errors
         networksockets: Sockets
         diskusage: Disk usage and mounts
+    buttons:
+        messages: Messages
     headings:
         serverinfo:
             fqdn: FQDN
