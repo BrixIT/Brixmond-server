@@ -117,3 +117,16 @@ admin_user_notification:
 admin_watches:
     path:     /admin/watches
     defaults: { _controller: BrixITbrixmondBundle:Admin:watches }
+
+admin_watch_edit:
+    path:     /admin/watch/{id}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchEdit }
+
+admin_watch_new:
+    path:     /admin/watch/new
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchEdit, id:new }
+
+admin_watch_remove:
+    path:     /admin/watch/{id}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchRemove }
+
