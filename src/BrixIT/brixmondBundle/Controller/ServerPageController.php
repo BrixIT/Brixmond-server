@@ -67,6 +67,7 @@ class ServerPageController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($message);
         $manager->flush();
+        //TODO: Notify users that someone assigned the message to him.
         return $this->redirectToRoute('server_message_detail', ['fqdn' => $fqdn, 'id' => $id], 303);
     }
 
@@ -77,6 +78,7 @@ class ServerPageController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($message);
         $manager->flush();
+        //TODO: Notify users that the issue is fixed.
         return $this->redirectToRoute('server_message_detail', ['fqdn' => $fqdn, 'id' => $id], 303);
     }
 }
