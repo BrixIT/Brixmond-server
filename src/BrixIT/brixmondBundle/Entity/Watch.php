@@ -75,6 +75,9 @@ class Watch
      */
     protected $messages;
 
+    protected $notificationMessageRendered = '';
+    protected $notificationTitleRendered = '';
+
     /**
      * Get id
      *
@@ -288,4 +291,37 @@ class Watch
     {
         return $this->messages;
     }
+
+    /**
+     * @return string
+     */
+    public function getNotificationMessageRendered()
+    {
+        return $this->notificationMessageRendered;
+    }
+
+    /**
+     * @param string $notificationMessageRendered
+     */
+    public function setNotificationMessageRendered($notificationMessageRendered)
+    {
+        $this->notificationMessageRendered = $notificationMessageRendered;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotificationTitleRendered()
+    {
+        return $this->notificationTitleRendered;
+    }
+
+    /**
+     * @param string $notificationTitleRendered
+     */
+    public function setNotificationTitleRendered($notificationTitleRendered)
+    {
+        $this->notificationTitleRendered = $notificationTitleRendered;
+    }
+
 }

@@ -38,8 +38,8 @@ class WatchRunner extends ContainerAware
                     break;
                 }
 
-                $watch->setNotificationTitle($this->container->get('twig')->render($watch->getNotificationTitle(), $context));
-                $watch->setNotificationMessage($this->container->get('twig')->render($watch->getNotificationMessage(), $context));
+                $watch->setNotificationTitleRendered($this->container->get('twig')->render($watch->getNotificationTitle(), $context));
+                $watch->setNotificationMessageRendered($this->container->get('twig')->render($watch->getNotificationMessage(), $context));
 
                 $results[] = $watch;
 
@@ -49,8 +49,8 @@ class WatchRunner extends ContainerAware
         foreach ($results as $result) {
             /** @var Watch $result */
             $message = new Message();
-            $message->setTitle($result->getNotificationTitle());
-            $message->setMessage($result->getNotificationMessage());
+            $message->setTitle($result->getNotificationTitleRendered());
+            $message->setMessage($result->getNotificationMessageRendered());
             $message->setFixed(false);
             $message->setLevel($result->getAction());
             $message->setClient($client);
