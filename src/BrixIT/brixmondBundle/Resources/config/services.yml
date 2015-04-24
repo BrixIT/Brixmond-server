@@ -6,8 +6,20 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+    twig.stringloader:
+        class: Twig_Loader_String
+        tags:
+            - { name: twig.loader }
 
     user_notifier:
         class: BrixIT\brixmondBundle\Util\UserNotifier
+        calls:
+              - [ setContainer,[ @service_container ] ]
+    watch_runner:
+        class: BrixIT\brixmondBundle\Util\WatchRunner
+        calls:
+              - [ setContainer,[ @service_container ] ]
+    message_manager:
+        class: BrixIT\brixmondBundle\Util\MessageManager
         calls:
               - [ setContainer,[ @service_container ] ]

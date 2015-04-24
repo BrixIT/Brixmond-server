@@ -33,6 +33,11 @@
                     {{ 'timedomain.day' | trans }}
                 </a>
             </div>
+
+            <a href="{{ path('server_message_list', {'fqdn': fqdn}) }}" class="btn btn-default">
+                {{ 'charts.buttons.messages' | trans }}
+                <span class="badge">{{ messagecount }}</span>
+            </a>
         </div>
     </div>
     <div class="row">
@@ -46,7 +51,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'charts.headings.serverinfo.cpu' | trans }}</th>
-                        <td>{{ client.cpu }}</td>
+                        <td>{{ client.cores }}x {{ client.cpu }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'charts.headings.serverinfo.arch' | trans }}</th>

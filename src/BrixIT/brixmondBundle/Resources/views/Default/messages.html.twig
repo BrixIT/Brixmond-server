@@ -1,0 +1,142 @@
+{% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
+{% import "BrixITbrixmondBundle:Default:macros.html.twig" as macros %}
+
+{% block headerbar %}&raquo; {{ 'messages.title' | trans }} &raquo; </span>{{ fqdn }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12" id="buttonrow">
+            <a href="{{ path('home') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                {{ 'backtodashboard' | trans }}
+            </a>
+
+            <a href="{{ path('server_charts', {'fqdn': fqdn}) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-tasks"></span>
+                {{ 'messages.buttons.charts' | trans }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% for message in messages %}
+                        <div class="media{% if message.fixed %} message-fixed{% endif %}">
+                            <div class="media-left">
+                                <div class="media-object">
+                                    <div class="message-icon">
+                                        {% if message.level == 'info' %}
+                                            <span class="glyphicon glyphicon-info-sign text-info"></span>
+                                        {% elseif message.level == 'warning' %}
+                                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                                        {% elseif message.level == 'error' %}
+                                            <span class="glyphicon glyphicon-fire text-danger"></span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    {{ message.title }}
+                                </h4>
+
+                                <p>
+                                    {{ message.message }}
+                                </p>
+
+                                <p>
+                                    <a href="{{ path('server_message_detail', {'id': message.id, 'fqdn': fqdn}) }}"
+                                       class="btn btn-sm btn-default">
+                                        {{ 'messages.buttons.details' | trans }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if detail is defined %}
+                        <h2>{{ detail.title }}</h2>
+                        <p>
+                            {{ detail.message }}
+                        </p>
+
+                        <table class="table">
+                            <tr>
+                                <th>{{ 'messages.headings.severity' | trans }}</th>
+                                <td>
+                                    {{ ('messages.level.' ~ detail.level) | trans }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'messages.headings.acknowledged' | trans }}</th>
+                                <td>
+                                    {% if detail.acknowledged is null %}
+                                        {{ 'no' | trans }}<br>
+                                        <a href="{{ path('server_message_acknowledge', {'id': detail.id, 'fqdn': fqdn}) }}"
+                                           class="btn btn-sm btn-default">
+                                            {{ 'messages.buttons.assign' | trans }}
+                                        </a>
+                                    {% else %}
+                                        {{ detail.acknowledged.username }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'messages.headings.fixed' | trans }}</th>
+                                <td>
+                                    {% if detail.fixed %}
+                                        {{ 'yes' | trans }}
+                                    {% else %}
+                                        {{ 'no' | trans }}
+                                        {% if detail.acknowledged.username == app.user.username %}
+                                            <br>
+                                            <a href="{{ path('server_message_fix', {'id': detail.id, 'fqdn': fqdn}) }}"
+                                               class="btn btn-sm btn-default">
+                                                {{ 'messages.buttons.fix' | trans }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'messages.headings.note' | trans }}</th>
+                                <td>
+                                    {% if detail.note is null %}
+                                        {{ 'empty' | trans }}
+                                    {% else %}
+                                        {{ detail.note }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'messages.headings.extra' | trans }}</th>
+                                <td>
+                                    {% if detail.extra is null %}
+                                        {{ 'empty' | trans }}
+                                    {% else %}
+                                        {{ detail.extra | json_encode }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    {% else %}
+                        <p class="text-info">
+                            {{ 'messages.nomessages' | trans }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

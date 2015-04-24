@@ -2,6 +2,7 @@ settings: Settings
 backtodashboard: Back to dashboard
 yes: yes
 no: no
+empty: empty
 
 auth:
     login: Login
@@ -23,6 +24,25 @@ overview:
     title: Overview
     internet: Internet
 
+messages:
+    title: Messages
+    nomessages: No messages logged on this client
+    buttons:
+        charts: Charts
+        details: Message details
+        assign: Assign to me
+        fix: Mark as fixed
+    headings:
+        severity: Severity
+        acknowledged: Acknowledged
+        fixed: Fixed
+        note: Note
+        extra: Extra information
+    level:
+        info: Info
+        warning: Warning
+        error: Error
+
 charts:
     title: Charts
     titles:
@@ -37,6 +57,8 @@ charts:
         networkerrors: Network errors
         networksockets: Sockets
         diskusage: Disk usage and mounts
+    buttons:
+        messages: Messages
     headings:
         serverinfo:
             fqdn: FQDN
@@ -72,7 +94,7 @@ admin:
 
         buttons:
             add: Add user
-            testnotification: Test notifications
+            testnotifications: Test notifications
             remove: Remove user
             edit: Edit
 

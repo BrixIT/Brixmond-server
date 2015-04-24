@@ -17,6 +17,7 @@ class ClientController extends Controller
         $arch = $request->query->get('arch', 'i386');
         $distro = $request->query->get('dist', 'unknown');
         $cpu = $request->query->get('cpu', 'unknown');
+        $cores = $request->query->get('cores', 1);
 
         $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
             'fqdn' => $fqdn,
@@ -31,6 +32,7 @@ class ClientController extends Controller
             $client->setCpu($cpu);
             $client->setDist($distro);
             $client->setArch($arch);
+            $client->setCores($cores);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($client);
             $manager->flush();
@@ -39,6 +41,14 @@ class ClientController extends Controller
                 'polling_time' => 1 // minutes
             ]);
         } else {
+            $client->setCpu($cpu);
+            $client->setDist($distro);
+            $client->setArch($arch);
+            $client->setCores($cores);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($client);
+            $manager->flush();
+
             if ($client->getEnabled()) {
                 return new JsonResponse([
                     'enabled' => true,
@@ -77,7 +87,7 @@ class ClientController extends Controller
         foreach ($existingInfoRows as $row) {
             $existingInfo[$row->getName()] = $row;
         }
-
+        $watchRunner = $this->get('watch_runner');
         foreach ($packets as $packet) {
             if ($packet['type'] == 'point') {
                 $datapoint = new Datapoint();
@@ -86,6 +96,7 @@ class ClientController extends Controller
                 $datapoint->setPoint(json_decode($packet['point'], true));
                 $datapoint->setTime(new \DateTime($packet['stamp']));
                 $manager->persist($datapoint);
+                $watchRunner->runPointWatches($datapoint, $client);
             } elseif ($packet['type'] == 'info') {
                 if (array_key_exists($packet['name'], $existingInfo)) {
                     $existingInfo[$packet['name']]->setValue(json_decode($packet['point'], true));

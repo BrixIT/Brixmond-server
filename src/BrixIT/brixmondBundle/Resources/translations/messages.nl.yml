@@ -1,6 +1,7 @@
 settings: Instellingen
 yes: ja
 no: nee
+empty: leeg
 
 auth:
     login: Inloggen
@@ -21,6 +22,25 @@ timedomain:
 overview:
     title: Overzicht
     internet: Internet
+
+messages:
+    title: Berichten
+    nomessages: No berichten op deze client
+    buttons:
+        charts: Grafieken
+        details: Bericht details
+        assign: Aan mij toewijzen
+        fix: Als opgelost markeren
+    headings:
+        severity: Niveau
+        acknowledged: Toegewezen aan
+        fixed: Opgelost
+        note: Notitie
+        extra: Extra informatie
+    level:
+        info: Info
+        warning: Waarschuwing
+        error: Fout
 
 charts:
     title: Grafieken
@@ -71,7 +91,7 @@ admin:
 
         buttons:
             add: Gebruiker toevoegen
-            testnotification: Test meldingen
+            testnotifications: Test meldingen
             remove: Gebruiker verwijderen
             edit: Bewerken
 
