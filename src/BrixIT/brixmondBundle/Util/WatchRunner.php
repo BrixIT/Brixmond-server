@@ -55,6 +55,7 @@ class WatchRunner extends ContainerAware
             $message->setLevel($result->getAction());
             $message->setClient($client);
             $message->setWatch($result);
+            $message->setExtra($client->getInfo()->getValues());
             $this->container->get('message_manager')->addMessage($client, $message);
         }
 
