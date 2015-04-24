@@ -32,4 +32,29 @@ class ServerPageController extends Controller
 
         return $this->render('BrixITbrixmondBundle:Default:charts.html.twig', $context);
     }
+
+    public function messagesAction($fqdn, $id)
+    {
+        $context = [
+            'fqdn' => $fqdn,
+        ];
+        $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
+            'fqdn' => $fqdn
+        ]);
+        $context['client'] = $client;
+
+        $messages = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->findBy([
+            'client' => $client
+        ]);
+        $context['messages'] = $messages;
+        if (count($messages) > 0) {
+            if ($id == 'top') {
+                $message = $messages[0];
+            } else {
+                $message = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->find($id);
+            }
+            $context['detail'] = $message;
+        }
+        return $this->render('BrixITbrixmondBundle:Default:messages.html.twig', $context);
+    }
 }

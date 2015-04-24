@@ -18,6 +18,14 @@ server_charts:
     path:     /charts/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerPage:charts, timedomain: hour }
 
+server_message_list:
+    path:     /messages/{fqdn}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:messages, id:top }
+
+server_message_detail:
+    path:     /messages/{fqdn}/{id}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:messages }
+
 ajax_system_load:
     path:     /ajax/system-load/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:systemLoad }

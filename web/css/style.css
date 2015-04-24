@@ -6567,6 +6567,11 @@ body > header {
   color: #1ba8ff;
   text-decoration: none;
 }
+.message-icon {
+  font-size: 1cm;
+  padding-left: 0.5cm;
+  padding-right: 0.5cm;
+}
 main {
   padding-top: 10px;
 }

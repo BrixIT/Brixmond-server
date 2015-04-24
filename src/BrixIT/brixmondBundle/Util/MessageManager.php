@@ -34,7 +34,10 @@ class MessageManager extends ContainerAware
             $notification = new UserNotification();
             $notification->setTitle($message->getTitle());
             $notification->setMessage($message->getMessage());
-            $url = $this->container->get('router')->generate('server_charts', ['fqdn' => $client->getFqdn()], true);
+            $url = $this->container->get('router')->generate('server_message_detail', [
+                'fqdn' => $client->getFqdn(),
+                'id' => $message->getId()
+            ], true);
             $notification->setUrl($url);
             $notification->setAction('Open in brixmond');
 

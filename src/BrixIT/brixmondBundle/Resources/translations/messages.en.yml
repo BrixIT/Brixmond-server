@@ -2,6 +2,7 @@ settings: Settings
 backtodashboard: Back to dashboard
 yes: yes
 no: no
+empty: empty
 
 auth:
     login: Login
@@ -22,6 +23,24 @@ timedomain:
 overview:
     title: Overview
     internet: Internet
+
+messages:
+    title: Messages
+    nomessages: No messages logged on this client
+    buttons:
+        charts: Charts
+        details: Message details
+        assign: Assign to me
+    headings:
+        severity: Severity
+        acknowledged: Acknowledged
+        fixed: Fixed
+        note: Note
+        extra: Extra information
+    level:
+        info: Info
+        warning: Warning
+        error: Error
 
 charts:
     title: Charts
