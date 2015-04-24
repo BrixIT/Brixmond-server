@@ -36,7 +36,7 @@
 
             <a href="{{ path('server_message_list', {'fqdn': fqdn}) }}" class="btn btn-default">
                 {{ 'charts.buttons.messages' | trans }}
-                <span class="badge">{{ client.messages.count }}</span>
+                <span class="badge">{{ messagecount }}</span>
             </a>
         </div>
     </div>

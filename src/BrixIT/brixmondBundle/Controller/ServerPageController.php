@@ -23,6 +23,14 @@ class ServerPageController extends Controller
         $infoRows = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:ClientInfo')->findBy([
             'client' => $client
         ]);
+
+        $messages = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->findBy([
+            'client' => $client,
+            'fixed' => false
+        ]);
+
+        $context['messagecount'] = count($messages);
+
         $info = [];
         foreach ($infoRows as $row) {
             $info[$row->getName()] = $row;
