@@ -166,4 +166,14 @@ class AdminController extends Controller
         $userManager->deleteUser($userManager->findUserByUsername($username));
         return $this->redirectToRoute('admin_users', [], 303);
     }
+
+    public function watchesAction()
+    {
+        $watches = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Watch')->findAll();
+
+        $context = [
+            'watches' => $watches
+        ];
+        return $this->render('@BrixITbrixmond/Admin/watches.html.twig', $context);
+    }
 }

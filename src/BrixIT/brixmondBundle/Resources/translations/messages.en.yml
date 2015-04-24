@@ -82,6 +82,18 @@ admin:
         servers: Servers
         users: Users
         hosts: Hosts
+        watches: Watches
+
+    watches:
+        title: Watches
+        headings:
+            name: Name
+            type: Type
+            system: System
+            action: Action
+        buttons:
+            add: Add watch
+            edit: Edit
 
     users:
         headings:

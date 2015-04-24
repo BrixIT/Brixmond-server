@@ -1,0 +1,35 @@
+{% extends "BrixITbrixmondBundle:Admin:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title.base' | trans }} &raquo; {{ 'admin.title.watches' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block admin %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="{{ path('admin_user_add') }}" class="btn btn-default">{{ 'admin.watches.buttons.add' | trans }}</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'admin.watches.headings.name' | trans }}</th>
+                <th>{{ 'admin.watches.headings.type' | trans }}</th>
+                <th>{{ 'admin.watches.headings.system' | trans }}</th>
+                <th>{{ 'admin.watches.headings.action' | trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for watch in watches %}
+                <tr>
+                    <td>{{ watch.name }}</td>
+                    <td>{{ watch.type }}</td>
+                    <td>{{ watch.system }}</td>
+                    <td>{{ watch.action }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

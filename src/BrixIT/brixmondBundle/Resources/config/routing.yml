@@ -113,3 +113,7 @@ admin_user_remove:
 admin_user_notification:
     path:     /admin/users/{username}/notify
     defaults: { _controller: BrixITbrixmondBundle:Admin:userNotify }
+
+admin_watches:
+    path:     /admin/watches
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watches }
