@@ -6572,6 +6572,9 @@ body > header {
   padding-left: 0.5cm;
   padding-right: 0.5cm;
 }
+.message-fixed {
+  opacity: 0.5;
+}
 main {
   padding-top: 10px;
 }

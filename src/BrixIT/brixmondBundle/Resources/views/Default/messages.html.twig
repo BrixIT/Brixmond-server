@@ -23,7 +23,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     {% for message in messages %}
-                        <div class="media">
+                        <div class="media{% if message.fixed %} message-fixed{% endif %}">
                             <div class="media-left">
                                 <div class="media-object">
                                     <div class="message-icon">
@@ -79,7 +79,8 @@
                                 <td>
                                     {% if detail.acknowledged is null %}
                                         {{ 'no' | trans }}<br>
-                                        <a href="#" class="btn btn-sm btn-default">
+                                        <a href="{{ path('server_message_acknowledge', {'id': detail.id, 'fqdn': fqdn}) }}"
+                                           class="btn btn-sm btn-default">
                                             {{ 'messages.buttons.assign' | trans }}
                                         </a>
                                     {% else %}
@@ -94,6 +95,13 @@
                                         {{ 'yes' | trans }}
                                     {% else %}
                                         {{ 'no' | trans }}
+                                        {% if detail.acknowledged.username == app.user.username %}
+                                            <br>
+                                            <a href="{{ path('server_message_fix', {'id': detail.id, 'fqdn': fqdn}) }}"
+                                               class="btn btn-sm btn-default">
+                                                {{ 'messages.buttons.fix' | trans }}
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                             </tr>

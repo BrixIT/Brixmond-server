@@ -31,6 +31,7 @@ messages:
         charts: Charts
         details: Message details
         assign: Assign to me
+        fix: Mark as fixed
     headings:
         severity: Severity
         acknowledged: Acknowledged

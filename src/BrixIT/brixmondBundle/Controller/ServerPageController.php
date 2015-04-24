@@ -57,4 +57,26 @@ class ServerPageController extends Controller
         }
         return $this->render('BrixITbrixmondBundle:Default:messages.html.twig', $context);
     }
+
+    public function acknowledgeMessageAction($fqdn, $id)
+    {
+        $message = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->find($id);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $message->setAcknowledged($user);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($message);
+        $manager->flush();
+        return $this->redirectToRoute('server_message_detail', ['fqdn' => $fqdn, 'id' => $id], 303);
+    }
+
+    public function fixMessageAction($fqdn, $id)
+    {
+        $message = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->find($id);
+        $message->setFixed(true);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($message);
+        $manager->flush();
+        return $this->redirectToRoute('server_message_detail', ['fqdn' => $fqdn, 'id' => $id], 303);
+    }
 }

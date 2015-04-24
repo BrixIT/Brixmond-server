@@ -30,6 +30,7 @@ messages:
         charts: Grafieken
         details: Bericht details
         assign: Aan mij toewijzen
+        fix: Als opgelost markeren
     headings:
         severity: Niveau
         acknowledged: Toegewezen aan

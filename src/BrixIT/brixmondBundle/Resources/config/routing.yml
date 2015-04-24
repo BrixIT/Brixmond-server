@@ -26,6 +26,14 @@ server_message_detail:
     path:     /messages/{fqdn}/{id}
     defaults: { _controller: BrixITbrixmondBundle:ServerPage:messages }
 
+server_message_acknowledge:
+    path:     /messages/{fqdn}/{id}/acknowledge
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:acknowledgeMessage }
+
+server_message_fix:
+    path:     /messages/{fqdn}/{id}/fix
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:fixMessage }
+
 ajax_system_load:
     path:     /ajax/system-load/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:systemLoad }
