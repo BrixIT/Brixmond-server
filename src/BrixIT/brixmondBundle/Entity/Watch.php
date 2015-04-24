@@ -49,6 +49,31 @@ class Watch
      */
     private $expression;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notification_title", type="string", length=255)
+     */
+    private $notificationTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notification_message", type="text")
+     */
+    private $notificationMessage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", length=255)
+     */
+    private $action;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="watch")
+     */
+    protected $messages;
 
     /**
      * Get id
@@ -153,5 +178,114 @@ class Watch
     public function getExpression()
     {
         return $this->expression;
+    }
+
+    /**
+     * Set notificationTitle
+     *
+     * @param string $notificationTitle
+     * @return Watch
+     */
+    public function setNotificationTitle($notificationTitle)
+    {
+        $this->notificationTitle = $notificationTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationTitle
+     *
+     * @return string 
+     */
+    public function getNotificationTitle()
+    {
+        return $this->notificationTitle;
+    }
+
+    /**
+     * Set notificationMessage
+     *
+     * @param string $notificationMessage
+     * @return Watch
+     */
+    public function setNotificationMessage($notificationMessage)
+    {
+        $this->notificationMessage = $notificationMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationMessage
+     *
+     * @return string 
+     */
+    public function getNotificationMessage()
+    {
+        return $this->notificationMessage;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     * @return Watch
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string 
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     * @return Watch
+     */
+    public function addMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     */
+    public function removeMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

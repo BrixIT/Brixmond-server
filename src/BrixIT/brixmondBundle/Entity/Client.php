@@ -58,6 +58,13 @@ class Client
     private $cpu;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="cores", type="integer")
+     */
+    private $cores;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
@@ -85,6 +92,11 @@ class Client
      * @ORM\OneToMany(targetEntity="ClientInfo", mappedBy="client")
      */
     protected $info;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="client")
+     */
+    protected $messages;
 
     public function __construct()
     {
@@ -357,4 +369,60 @@ class Client
         return $this->fqdn;
     }
 
+
+    /**
+     * Set cores
+     *
+     * @param integer $cores
+     * @return Client
+     */
+    public function setCores($cores)
+    {
+        $this->cores = $cores;
+
+        return $this;
+    }
+
+    /**
+     * Get cores
+     *
+     * @return integer 
+     */
+    public function getCores()
+    {
+        return $this->cores;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     * @return Client
+     */
+    public function addMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     */
+    public function removeMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
 }

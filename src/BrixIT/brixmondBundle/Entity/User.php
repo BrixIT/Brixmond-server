@@ -28,6 +28,11 @@ class User extends BaseUser
     protected $pushoverKey = null;
 
     /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="acknowledged_user")
+     */
+    protected $messages;
+
+    /**
      * @ORM\ManyToMany(targetEntity="BrixIT\brixmondBundle\Entity\Group")
      * @ORM\JoinTable(name="Users_Groups",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
@@ -107,5 +112,38 @@ class User extends BaseUser
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     * @return User
+     */
+    public function addMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \BrixIT\brixmondBundle\Entity\Message $messages
+     */
+    public function removeMessage(\BrixIT\brixmondBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
