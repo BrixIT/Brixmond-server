@@ -134,9 +134,85 @@ admin:
             warning: Notification (warning)
             error: Notification (error)
             drop: Drop notifications for packet
-        sidebar: >
+        sidebar: |
           <h2>Quick reference</h2>
-          Here be information
+          <p>
+          Watches are symfony2 Expression Language expressions that determine when a notification is created.
+          </p>
+          <h3>Scope variables</h3>
+          <p>
+          In the expression and template fields the following variables and methods are available:
+          </p>
+          <pre><code>
+          point:
+            different for every packet
+          server:
+            getFQDN()
+            getDist()
+            getArch()
+            getCPU()
+            getCores()
+          info:
+            processes:
+              - mem: 10.2 # percentage
+                cpu: 8.6  # percentage
+                name: apache2 -k
+              - mem: 85.5 # percentage
+                cpu: 8.6  # percentage
+                name: apache2 -k
+            ip:
+              eth0:
+                v4:
+                  - addr: 10.0.0.1
+                    netmask: 255.255.255.0
+                    broadcast: 10.0.0.255
+                v6:
+                  - addr: ::1
+                    netmask: ffff:ffff....
+            disk:
+              - device: /dev/sda1
+                mountpoint: /
+                fstype: ext4
+                usage:
+                  total: 12343 # bytes
+                  used: 2121   # bytes
+                  free: 32342  # bytes
+                  percent: 33  # percentage
+          </code></pre>
+          <h3>Expression Language</h3>
+          <p>
+              <b>Get the client cpu core count</b>:<br>
+              <code>server.getCores()</code>
+          </p>
+          <p>
+              <b>Basic math and comparison:</b><br>
+              <code>point.load15min > (server.getCores() * 0.8)</code>
+          </p>
+          <p>
+              <b>Access array keys:</b><br>
+              <code>info.processes[0].name</code>
+          </p>
+          <p>More information on <a href="http://symfony.com/doc/2.6/components/expression_language/syntax.html">
+          the Symfony website</a>
+          </p>
+          <h3>Twig templates</h3>
+          <p>
+            The notification message and title are formatted with Twig templates. These have access to the same variables
+            as the expression
+          </p>
+          <p>
+              <b>Get the client cpu core count:</b><br>
+              <code>The server has {{ server.cores }} cores</code><br>
+              Note that Twig automaticaly calls the getter getCores() on the server object for you. It is also possible
+              to call <code>server.getCores()</code> yourself.
+          </p>
+          <p>
+              <b>Access array keys:</b><br>
+              <code>The first top process is {{ info.processes[0].name }}</code>
+          </p>
+          <p>
+            More information is available in <a href="http://twig.sensiolabs.org/doc/templates.html">the Twig documentation</a>
+          </p>
 
     users:
         headings:
