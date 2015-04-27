@@ -130,6 +130,14 @@ class WatchRunner extends ContainerAware
 
     private function saveDebugContext(array $context, Watch $watch)
     {
+        $server = $context['server'];
+        $context['server'] = [
+            'fqdn' => $server->getFQDN(),
+            'dist' => $server->getDist(),
+            'arch' => $server->getArch(),
+            'cpu' => $server->getCPU(),
+            'cores' => $server->getCores()
+        ];
         $watch->setDebugValue($context);
         $manager = $this->container->get('doctrine')->getManager();
         $manager->persist($watch);
