@@ -24,15 +24,25 @@ class WatchRunner extends ContainerAware
             $info[$i->getName()] = $i;
         }
         $results = [];
+        $previousDatapoint = $this->container->get('doctrine')->getRepository('BrixITbrixmondBundle:Datapoint')->findBy([
+            'client' => $client,
+            'system' => $datapoint->getSystem()
+        ], [
+            'time' => 'DESC'
+        ], 1, 1);
+        $previousDatapoint = $previousDatapoint[0];
+        if ($previousDatapoint == null) {
+            $previousDatapoint = $datapoint;
+        }
         foreach ($watches as $watch) {
             $language = new ExpressionLanguage();
             $context = [
                 'point' => $datapoint->getPoint(),
+                'previousPoint' => $previousDatapoint->getPoint(),
                 'server' => $client,
                 'info' => $info
             ];
-            if ($language->evaluate($watch->getExpression(), $context)
-            ) {
+            if ($language->evaluate($watch->getExpression(), $context)) {
                 if ($watch->getAction() == 'drop') {
                     $results = [];
                     break;
