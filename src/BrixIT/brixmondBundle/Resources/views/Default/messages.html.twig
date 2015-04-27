@@ -96,7 +96,7 @@
                                         {{ 'yes' | trans }}
                                     {% else %}
                                         {{ 'no' | trans }}
-                                        {% if detail.acknowledged.username == app.user.username %}
+                                        {% if not detail.acknowledged is null and detail.acknowledged.username == app.user.username %}
                                             <br>
                                             <a href="{{ path('server_message_fix', {'id': detail.id, 'fqdn': fqdn}) }}"
                                                class="btn btn-sm btn-default">
