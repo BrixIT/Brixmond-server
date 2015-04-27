@@ -45,7 +45,11 @@ class WatchType extends AbstractType
                     'drop' => 'admin.watches.actions.drop'
                 ],
                 'label' => 'admin.watches.form.action.label'
-            ]);
+            ])
+            ->add('debug', 'checkbox', [
+                'label' => 'admin.watches.form.debug.label'
+            ])
+        ;
     }
 
     /**

@@ -200,6 +200,7 @@ class AdminController extends Controller
         $context = [
             'id' => $id,
             'form' => $form->createView(),
+            'watch' => $watch,
             'isnew' => $id === 'new'
         ];
         return $this->render('BrixITbrixmondBundle:Admin:watch_edit.html.twig', $context);

@@ -124,6 +124,10 @@ admin:
                 help: >
                   This changes the priority of the notification generated or makes the notification system stop
                   for this packet.
+            debug:
+                label: Debug
+                help: >
+                  This saves the variable scope for every run to debug.
             save:
                 label: Save
         types:
