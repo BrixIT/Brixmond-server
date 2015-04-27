@@ -142,6 +142,8 @@ admin:
           <pre><code>
           point:
             different for every packet
+          previousPoint:
+            the packet from the last run of this watch on the same server
           server:
             getFQDN()
             getDist()
