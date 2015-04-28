@@ -14,7 +14,14 @@ The masterserver is a PHP application build with symfony 2.6 and requires a mysq
 
 The code and installation instructions for the client is available in [its own repository](https://github.com/BrixIT/Brixmond)
 
-This project is translated in Enlish and Dutch.
+## Features
+
+- Monitors load, cpu usage, memory usage, swap, various network stats and disk usage
+- Monitors webservers (only apache for now)
+- Uses audit information from lynis
+- Notifies admins with pushover.net or email
+- Translated in english and dutch
+- User configurable "watches" used to generate notifications for admins
 
 ## Masterserver installation
 
