@@ -294,13 +294,13 @@ class ServerDataController extends Controller
                 'time' => $datapoint->getTime(),
                 'series' => [
                     (int)$point['cache']['hit'],
-                    (int)$point['cache']['drop'],
+                    (int)$point['cache']['miss'],
                 ]
             ];
         }
         return new JsonResponse([
             'dataset' => $response,
-            'labels' => ['Cache hit', 'Cache Drop'],
+            'labels' => ['Cache hit', 'Cache miss'],
             'minimalHeight' => 10
         ]);
     }
