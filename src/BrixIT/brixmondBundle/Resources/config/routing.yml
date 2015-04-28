@@ -34,6 +34,10 @@ server_message_fix:
     path:     /messages/{fqdn}/{id}/fix
     defaults: { _controller: BrixITbrixmondBundle:ServerPage:fixMessage }
 
+server_audits:
+    path:     /audits/{fqdn}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:audit }
+
 ajax_system_load:
     path:     /ajax/system-load/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:systemLoad }
@@ -113,3 +117,19 @@ admin_user_remove:
 admin_user_notification:
     path:     /admin/users/{username}/notify
     defaults: { _controller: BrixITbrixmondBundle:Admin:userNotify }
+
+admin_watches:
+    path:     /admin/watches
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watches }
+
+admin_watch_edit:
+    path:     /admin/watch/{id}/edit
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchEdit }
+
+admin_watch_new:
+    path:     /admin/watch/new
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchEdit, id:new }
+
+admin_watch_remove:
+    path:     /admin/watch/{id}/remove
+    defaults: { _controller: BrixITbrixmondBundle:Admin:watchRemove }

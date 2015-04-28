@@ -99,6 +99,7 @@ class ClientController extends Controller
                 $watchRunner->runPointWatches($datapoint, $client);
             } elseif ($packet['type'] == 'info') {
                 if (array_key_exists($packet['name'], $existingInfo)) {
+                    $watchRunner->runInfoWatches(json_decode($packet['point'], true), $existingInfo[$packet['name']], $client);
                     $existingInfo[$packet['name']]->setValue(json_decode($packet['point'], true));
                     $manager->persist($existingInfo[$packet['name']]);
                 } else {
@@ -107,6 +108,7 @@ class ClientController extends Controller
                     $info->setName($packet['name']);
                     $info->setValue(json_decode($packet['point'], true));
                     $manager->persist($info);
+                    $watchRunner->runInfoWatches($info->getValue(), $info, $client);
                     $existingInfo[$packet['name']] = $info;
                 }
             }

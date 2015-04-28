@@ -1,0 +1,104 @@
+{% extends "BrixITbrixmondBundle:Default:base.html.twig" %}
+{% import "BrixITbrixmondBundle:Default:macros.html.twig" as macros %}
+
+{% block headerbar %}&raquo; {{ 'audit.title' | trans }} &raquo; </span>{{ fqdn }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12" id="buttonrow">
+            <a href="{{ path('home') }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                {{ 'backtodashboard' | trans }}
+            </a>
+
+            <a href="{{ path('server_charts', {'fqdn': fqdn}) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-tasks"></span>
+                {{ 'messages.buttons.charts' | trans }}
+            </a>
+            <a href="{{ path('server_message_list', {'fqdn': fqdn}) }}" class="btn btn-default">
+                {{ 'charts.buttons.messages' | trans }}
+                <span class="badge">{{ messagecount }}</span>
+            </a>
+        </div>
+    </div>
+    {% if auditEnabled %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Warnings</div>
+                    <div class="panel-body">
+                        {% for code, audit in audits.warnings %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <div class="message-icon">
+                                            {% if audit.prio == 'L' or audit.prio == 'U' %}
+                                                <span class="glyphicon glyphicon-info-sign text-info"></span>
+                                            {% elseif audit.prio == 'M' %}
+                                                <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                                            {% elseif audit.prio == 'H' %}
+                                                <span class="glyphicon glyphicon-fire text-danger"></span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{ code }}
+                                    </h4>
+
+                                    <p>
+                                        {{ audit.description }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Suggestions</div>
+                    <div class="panel-body">
+                        {% for code, audit in audits.suggestions %}
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <div class="message-icon">
+                                            {% if audit.prio == 'L' or audit.prio == 'U' %}
+                                                <span class="glyphicon glyphicon-info-sign text-info"></span>
+                                            {% elseif audit.prio == 'M' %}
+                                                <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                                            {% elseif audit.prio == 'H' %}
+                                                <span class="glyphicon glyphicon-fire text-danger"></span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        {{ code }}
+                                    </h4>
+
+                                    <p>
+                                        {{ audit.description }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            The server audits page depends on the Lynis auditing tool. Install Lynis on the client to receive auditing
+            information.
+        </div>
+    {% endif %}
+{% endblock %}

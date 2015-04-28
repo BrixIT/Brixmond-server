@@ -30,6 +30,11 @@
                     <span class="glyphicon glyphicon-user"></span>
                     {{ 'admin.title.users'|trans }}
                 </a>
+                <a href="{{ path('admin_watches') }}"
+                   class="list-group-item{% if app.request.get('_route') == 'admin_watches' %} active{% endif %}">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    {{ 'admin.title.watches'|trans }}
+                </a>
             </div>
         </div>
         <div class="col-lg-10">

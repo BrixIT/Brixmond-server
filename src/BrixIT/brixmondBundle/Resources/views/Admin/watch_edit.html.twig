@@ -1,0 +1,78 @@
+{% extends "BrixITbrixmondBundle:Admin:base.html.twig" %}
+
+{% block headerbar %}&raquo; </span>{{ 'admin.title.base' | trans }} &raquo; {{ 'admin.title.watches' | trans }}{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block admin %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                {% if not isnew %}
+                    <div class="panel-body">
+
+                        <a href="{{ path('admin_watch_remove', {'id': id}) }}" class="btn btn-danger">
+                            {{ 'admin.watches.buttons.remove' | trans }}
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.name) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.name.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.type) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.type.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.system) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.system.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.expression) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.expression.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.notificationTitle) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.notificationtitle.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.notificationMessage) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.notificationmessage.help' | trans }}
+                    </p>
+
+                    {{ form_row(form.action) }}
+                    <p class="help-block">
+                        {{ 'admin.watches.form.action.help' | trans }}
+                    </p>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Debug output</h3>
+                    <pre><code>{{ watch.debugValue | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ 'admin.watches.sidebar' | trans | raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

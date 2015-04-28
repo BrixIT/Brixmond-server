@@ -17,6 +17,10 @@
                 <span class="glyphicon glyphicon-tasks"></span>
                 {{ 'messages.buttons.charts' | trans }}
             </a>
+            <a href="{{ path('server_audits', {'fqdn': fqdn}) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-ok"></span>
+                {{ 'messages.buttons.audits' | trans }}
+            </a>
         </div>
     </div>
     <div class="row">
@@ -96,7 +100,7 @@
                                         {{ 'yes' | trans }}
                                     {% else %}
                                         {{ 'no' | trans }}
-                                        {% if detail.acknowledged.username == app.user.username %}
+                                        {% if not detail.acknowledged is null and detail.acknowledged.username == app.user.username %}
                                             <br>
                                             <a href="{{ path('server_message_fix', {'id': detail.id, 'fqdn': fqdn}) }}"
                                                class="btn btn-sm btn-default">

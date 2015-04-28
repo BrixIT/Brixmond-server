@@ -38,6 +38,10 @@
                 {{ 'charts.buttons.messages' | trans }}
                 <span class="badge">{{ messagecount }}</span>
             </a>
+            <a href="{{ path('server_audits', {'fqdn': fqdn}) }}" class="btn btn-default">
+                <span class="glyphicon glyphicon-ok"></span>
+                {{ 'charts.buttons.audits' | trans }}
+            </a>
         </div>
     </div>
     <div class="row">

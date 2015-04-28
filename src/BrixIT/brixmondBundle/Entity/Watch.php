@@ -79,6 +79,22 @@ class Watch
     protected $notificationTitleRendered = '';
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="debug", type="boolean")
+     */
+    private $debug;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="debug_value", type="json_array")
+     */
+    private $debugValue;
+
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -324,4 +340,50 @@ class Watch
         $this->notificationTitleRendered = $notificationTitleRendered;
     }
 
+
+    /**
+     * Set debug
+     *
+     * @param boolean $debug
+     * @return Watch
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+
+        return $this;
+    }
+
+    /**
+     * Get debug
+     *
+     * @return boolean 
+     */
+    public function getDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
+     * Set debugValue
+     *
+     * @param array $debugValue
+     * @return Watch
+     */
+    public function setDebugValue($debugValue)
+    {
+        $this->debugValue = $debugValue;
+
+        return $this;
+    }
+
+    /**
+     * Get debugValue
+     *
+     * @return array 
+     */
+    public function getDebugValue()
+    {
+        return $this->debugValue;
+    }
 }

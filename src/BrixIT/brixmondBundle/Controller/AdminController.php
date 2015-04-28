@@ -4,8 +4,10 @@ namespace BrixIT\brixmondBundle\Controller;
 
 use BrixIT\brixmondBundle\Entity\Host;
 use BrixIT\brixmondBundle\Entity\User;
+use BrixIT\brixmondBundle\Entity\Watch;
 use BrixIT\brixmondBundle\Form\HostType;
 use BrixIT\brixmondBundle\Form\UserType;
+use BrixIT\brixmondBundle\Form\WatchType;
 use BrixIT\brixmondBundle\Model\UserNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -165,5 +167,53 @@ class AdminController extends Controller
         $userManager = $this->get('fos_user.user_manager');
         $userManager->deleteUser($userManager->findUserByUsername($username));
         return $this->redirectToRoute('admin_users', [], 303);
+    }
+
+    public function watchesAction()
+    {
+        $watches = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Watch')->findAll();
+
+        $context = [
+            'watches' => $watches
+        ];
+        return $this->render('@BrixITbrixmond/Admin/watches.html.twig', $context);
+    }
+
+    public function watchEditAction(Request $request, $id)
+    {
+        if ($id === 'new') {
+            $watch = new Watch();
+        } else {
+            $watch = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Watch')->find($id);
+        }
+        $form = $this->createForm(new WatchType(), $watch);
+        $form->add('save', 'submit', array('label' => 'admin.watches.form.save.label'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($watch);
+            $manager->flush();
+            return $this->redirectToRoute('admin_watches', [], 303);
+        }
+        $context = [
+            'id' => $id,
+            'form' => $form->createView(),
+            'watch' => $watch,
+            'isnew' => $id === 'new'
+        ];
+        return $this->render('BrixITbrixmondBundle:Admin:watch_edit.html.twig', $context);
+    }
+
+    public function watchRemoveAction($id)
+    {
+        $watch = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Watch')->find($id);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($watch);
+        $manager->flush();
+        return $this->redirectToRoute('admin_watches', [], 303);
+
     }
 }
