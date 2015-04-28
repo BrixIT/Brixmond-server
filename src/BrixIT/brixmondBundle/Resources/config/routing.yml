@@ -70,6 +70,14 @@ ajax_swap:
     path:     /ajax/swap/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:swap }
 
+ajax_varnish_cache:
+    path:     /ajax/varnish-cache/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:varnishCache }
+
+ajax_varnish_sessions:
+    path:     /ajax/varnish-sessions/{fqdn}/{timedomain}
+    defaults: { _controller: BrixITbrixmondBundle:ServerData:varnishSession }
+
 admin_servers:
     path:     /admin
     defaults: { _controller: BrixITbrixmondBundle:Admin:servers }

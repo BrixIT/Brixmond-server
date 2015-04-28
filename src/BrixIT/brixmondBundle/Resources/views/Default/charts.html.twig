@@ -242,5 +242,32 @@
                 </table>
             </div>
         </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ 'charts.titles.varnishsessions' | trans }}
+                </div>
+                <div class="panel-graph" id="graph-varnish-sessions">
+                    <script>
+                        generateLineChart('#graph-varnish-sessions', 'varnish-sessions', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ 'charts.titles.varnishcache' | trans }}
+                </div>
+                <div class="panel-graph" id="graph-varnish-cache">
+                    <script>
+                        generateAreaChart('#graph-varnish-cache', 'varnish-cache', '{{ fqdn }}', '{{ timedomain }}', d3.scale.category10);
+                    </script>
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
