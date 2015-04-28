@@ -32,6 +32,7 @@ messages:
         details: Message details
         assign: Assign to me
         fix: Mark as fixed
+        audits: Audits
     headings:
         severity: Severity
         acknowledged: Acknowledged
@@ -59,6 +60,7 @@ charts:
         diskusage: Disk usage and mounts
     buttons:
         messages: Messages
+        audits: Audits
     headings:
         serverinfo:
             fqdn: FQDN

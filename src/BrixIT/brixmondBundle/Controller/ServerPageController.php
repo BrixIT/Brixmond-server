@@ -89,4 +89,32 @@ class ServerPageController extends Controller
         //TODO: Notify users that the issue is fixed.
         return $this->redirectToRoute('server_message_detail', ['fqdn' => $fqdn, 'id' => $id], 303);
     }
+
+    public function auditAction($fqdn)
+    {
+        $context = [
+            'fqdn' => $fqdn,
+        ];
+        $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
+            'fqdn' => $fqdn
+        ]);
+        $context['client'] = $client;
+
+        $audits = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:ClientInfo')->findOneBy([
+            'client' => $client,
+            'name' => 'lynis'
+        ]);
+        $context['auditEnabled'] = $audits != null;
+        if ($context['auditEnabled']) {
+            $context['audits'] = $audits->getValue();
+        }
+
+        $messages = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Message')->findBy([
+            'client' => $client,
+            'fixed' => false
+        ]);
+        $context['messagecount'] = count($messages);
+
+        return $this->render('BrixITbrixmondBundle:Default:audit.html.twig', $context);
+    }
 }

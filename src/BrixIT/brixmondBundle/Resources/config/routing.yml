@@ -34,6 +34,10 @@ server_message_fix:
     path:     /messages/{fqdn}/{id}/fix
     defaults: { _controller: BrixITbrixmondBundle:ServerPage:fixMessage }
 
+server_audits:
+    path:     /audits/{fqdn}
+    defaults: { _controller: BrixITbrixmondBundle:ServerPage:audit }
+
 ajax_system_load:
     path:     /ajax/system-load/{fqdn}/{timedomain}
     defaults: { _controller: BrixITbrixmondBundle:ServerData:systemLoad }
@@ -129,4 +133,3 @@ admin_watch_new:
 admin_watch_remove:
     path:     /admin/watch/{id}/remove
     defaults: { _controller: BrixITbrixmondBundle:Admin:watchRemove }
-
