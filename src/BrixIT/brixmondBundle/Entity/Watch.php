@@ -88,7 +88,7 @@ class Watch
     /**
      * @var array
      *
-     * @ORM\Column(name="debug_value", type="json_array")
+     * @ORM\Column(name="debug_value", type="json_array", nullable=true)
      */
     private $debugValue;
 
