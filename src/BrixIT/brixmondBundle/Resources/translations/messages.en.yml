@@ -61,6 +61,8 @@ charts:
         networkerrors: Network errors
         networksockets: Sockets
         diskusage: Disk usage and mounts
+        varnishcache: Varnish cache
+        varnishsessions: Varnish sessions
     buttons:
         messages: Messages
         audits: Audits

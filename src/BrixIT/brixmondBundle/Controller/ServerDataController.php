@@ -108,7 +108,7 @@ class ServerDataController extends Controller
         foreach ($datapoints as $datapoint) {
             $point = $datapoint->getPoint();
             $cpuValues = [];
-            foreach($point as $cpu){
+            foreach ($point as $cpu) {
                 $cpuValues[] = $cpu['user'] + $cpu['system'];
             }
             $cpuCount = count($cpuValues);
@@ -118,8 +118,8 @@ class ServerDataController extends Controller
             ];
         }
         $labels = [];
-        for($i=0;$i<$cpuCount;$i++){
-            $labels[] = 'Core ' . ($i+1);
+        for ($i = 0; $i < $cpuCount; $i++) {
+            $labels[] = 'Core ' . ($i + 1);
         }
         return new JsonResponse([
             'dataset' => $response,
@@ -271,4 +271,71 @@ class ServerDataController extends Controller
         ]);
     }
 
+    public function varnishCacheAction($fqdn, $timedomain)
+    {
+        $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
+            'fqdn' => $fqdn
+        ]);
+        $repository = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Datapoint');
+        $query = $repository->createQueryBuilder('d')
+            ->where('d.client = :client')
+            ->andWhere('d.system = :system')
+            ->andWhere('d.time >= :begin')
+            ->setParameter('client', $client)
+            ->setParameter('system', 'varnish')
+            ->setParameter('begin', new \DateTime('-' . $this->getTimeDomain($timedomain), new \DateTimeZone('UTC')))
+            ->orderBy('d.time', 'ASC')
+            ->getQuery();
+        $datapoints = $query->getResult();
+        $response = [];
+        foreach ($datapoints as $datapoint) {
+            $point = $datapoint->getPoint();
+            $response[] = [
+                'time' => $datapoint->getTime(),
+                'series' => [
+                    (int)$point['cache']['hit'],
+                    (int)$point['cache']['drop'],
+                ]
+            ];
+        }
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['Cache hit', 'Cache Drop'],
+            'minimalHeight' => 10
+        ]);
+    }
+
+    public function varnishSessionAction($fqdn, $timedomain)
+    {
+        $client = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Client')->findOneBy([
+            'fqdn' => $fqdn
+        ]);
+        $repository = $this->getDoctrine()->getRepository('BrixITbrixmondBundle:Datapoint');
+        $query = $repository->createQueryBuilder('d')
+            ->where('d.client = :client')
+            ->andWhere('d.system = :system')
+            ->andWhere('d.time >= :begin')
+            ->setParameter('client', $client)
+            ->setParameter('system', 'varnish')
+            ->setParameter('begin', new \DateTime('-' . $this->getTimeDomain($timedomain), new \DateTimeZone('UTC')))
+            ->orderBy('d.time', 'ASC')
+            ->getQuery();
+        $datapoints = $query->getResult();
+        $response = [];
+        foreach ($datapoints as $datapoint) {
+            $point = $datapoint->getPoint();
+            $response[] = [
+                'time' => $datapoint->getTime(),
+                'series' => [
+                    (int)$point['conn']['conn'],
+                    (int)$point['conn']['drop'],
+                ]
+            ];
+        }
+        return new JsonResponse([
+            'dataset' => $response,
+            'labels' => ['Connection', 'Connection Drop'],
+            'minimalHeight' => 10
+        ]);
+    }
 }

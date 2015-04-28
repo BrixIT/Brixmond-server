@@ -8,13 +8,42 @@ The clients that need to be installed are using only python 3 (3.4 or higher rec
 
 The masterserver is a PHP application build with symfony 2.6 and requires a mysql server for storage.
 
-![Overview screenshot](http://brixitcdn.net/github/brixmond/overview.png)
-
-![Server details](http://brixitcdn.net/github/brixmond/charts.png)
-
 The code and installation instructions for the client is available in [its own repository](https://github.com/BrixIT/Brixmond)
 
-This project is translated in Enlish and Dutch.
+## Features
+
+- Monitors load, cpu usage, memory usage, swap, various network stats and disk usage
+- Monitors webservers (only apache for now)
+- Uses audit information from lynis
+- Notifies admins with pushover.net or email
+- Translated in english and dutch
+- User configurable "watches" used to generate notifications for admins
+
+To be implemented:
+- Support for nginx in webserver monitoring
+- Support for varnish monitoring
+- Support for logging systemd units (notify on failed units)
+- Add failover wan in network graph
+- Ping edge routers to check for internet provider failure
+
+## Screenshots
+
+<a href="http://brixitcdn.net/github/brixmond/overview.png">
+    <img src="http://brixitcdn.net/github/brixmond/overview.png" width="200">
+</a>
+<a href="http://brixitcdn.net/github/brixmond/messages.png">
+    <img src="http://brixitcdn.net/github/brixmond/messages.png" width="200">
+</a>
+<a href="http://brixitcdn.net/github/brixmond/charts.png">
+    <img src="http://brixitcdn.net/github/brixmond/charts.png" width="200">
+</a>
+<br>
+<a href="http://brixitcdn.net/github/brixmond/audits.png">
+    <img src="http://brixitcdn.net/github/brixmond/audits.png" width="200">
+</a>
+<a href="http://brixitcdn.net/github/brixmond/watch.png">
+    <img src="http://brixitcdn.net/github/brixmond/watch.png" width="200">
+</a>
 
 ## Masterserver installation
 

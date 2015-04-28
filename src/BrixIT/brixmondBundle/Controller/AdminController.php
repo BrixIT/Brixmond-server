@@ -9,6 +9,7 @@ use BrixIT\brixmondBundle\Form\HostType;
 use BrixIT\brixmondBundle\Form\UserType;
 use BrixIT\brixmondBundle\Form\WatchType;
 use BrixIT\brixmondBundle\Model\UserNotification;
+use Sensio\Bundle\FrameworkExtraBundle\Security\ExpressionLanguage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -197,11 +198,24 @@ class AdminController extends Controller
             $manager->flush();
             return $this->redirectToRoute('admin_watches', [], 303);
         }
+        $language = new ExpressionLanguage();
+        if ($id !== 'new') {
+            $compiled = $language->compile($watch->getExpression(), [
+                'point',
+                'previousPoint',
+                'info',
+                'server'
+            ]);
+        } else {
+            $compiled = 'Not compiled yet';
+        }
+
         $context = [
             'id' => $id,
             'form' => $form->createView(),
             'watch' => $watch,
-            'isnew' => $id === 'new'
+            'isnew' => $id === 'new',
+            'compiled' => $compiled,
         ];
         return $this->render('BrixITbrixmondBundle:Admin:watch_edit.html.twig', $context);
     }
