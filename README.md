@@ -25,6 +25,7 @@ The code and installation instructions for the client is available in [its own r
 
 To be implemented:
 - Support for nginx in webserver monitoring
+- Support for varnish monitoring
 - Support for logging systemd units (notify on failed units)
 - Add failover wan in network graph
 - Ping edge routers to check for internet provider failure
