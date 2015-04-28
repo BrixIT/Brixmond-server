@@ -108,7 +108,7 @@ class ClientController extends Controller
                     $info->setName($packet['name']);
                     $info->setValue(json_decode($packet['point'], true));
                     $manager->persist($info);
-                    $watchRunner->runInfoWatches($info, $info, $client);
+                    $watchRunner->runInfoWatches($info->getValue(), $info, $client);
                     $existingInfo[$packet['name']] = $info;
                 }
             }
