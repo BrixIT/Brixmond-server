@@ -24,6 +24,9 @@ overview:
     title: Overview
     internet: Internet
 
+audit:
+    title: Audits
+
 messages:
     title: Messages
     nomessages: No messages logged on this client

@@ -47,7 +47,8 @@ class WatchType extends AbstractType
                 'label' => 'admin.watches.form.action.label'
             ])
             ->add('debug', 'checkbox', [
-                'label' => 'admin.watches.form.debug.label'
+                'label' => 'admin.watches.form.debug.label',
+                'required' => false
             ])
         ;
     }
